@@ -21,8 +21,6 @@ char op(int id) {
 	switch(id){
 		case ADDOP:
 			return '+';
-		case SUBOP:
-			return '-';
 		case MULOP:
 			return '*';
 	}
@@ -39,7 +37,6 @@ void print_tree( tree_t *t, int spaces )
 
 	switch (t->type) {
 		case ADDOP:
-		case SUBOP:
 		case MULOP:
 			fprintf( stderr, "[OP:%c]", op(t->type) );
 			break;

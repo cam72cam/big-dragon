@@ -9,9 +9,17 @@
 /* regular expressions */
 
 letter		[a-zA-Z]
-word		{letter}+
 digit		[0-9]
+ident		{letter}({letter}|{digit})*
 int 		{digit}+
+
+relop		[=|<>|<|<=|>|>=]
+mulop		[*|/]|div|mod|and
+sign		[+|-]
+addop		[{sign}|or]
+
+colon		[:]
+assignop	{colon}=
 
 %%
 
@@ -19,17 +27,18 @@ int 		{digit}+
 
 {int}+		{ yylval = make_tree(INTEGER, NULL, NULL); yylval->attribute.ival = atof(yytext); return INTEGER; }
 
-[(]			fprintf(stderr, "rparen"); return RPAREN;
+[(]			return RPAREN;
 [)]			return LPAREN;
 
-[+]			return ADDOP;
-[-]			return SUBOP;
+{relop}		return RELOP;
+{mulop}		return MULOP;
+{sign}		return SIGN;
+{addop}		return ADDOP;
 
-[*]			return MULOP;
 [;]			return ENDSTMT;
-[:]			return COLON;
+{colon}		return COLON;
+{assignop}	return ASSIGNOP;
 
-[=]			return ASSIGNOP;
 
 program		return PROGRAM;
 var			return VAR;
@@ -51,13 +60,15 @@ else		return ELSE;
 while		return WHILE;
 do			return DO;
 
+not			return NOT;
+
 integer		return INTEGER_TYPE;
 real		return REAL_TYPE;
 
 [.]			return PERIOD;
 [,]			return COMMA;
 
-{word}	{
+{ident}	{
 			yylval = make_tree(IDENTIFIER, NULL, NULL);
 			yylval->attribute.sval = malloc(sizeof(char) * (strnlen(yytext, MAX_IDENT) + 1));
 			strncpy(yylval->attribute.sval, yytext, strnlen(yytext, MAX_IDENT));
