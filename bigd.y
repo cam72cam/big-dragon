@@ -26,18 +26,20 @@ main()
 %}
 
 %token RPAREN LPAREN ADDOP SUBOP MULOP ASSIGNOP IDENTIFIER ENDSTMT 
-%token PROGRAM VAR FUNCTION PROCEDURE BEGIN_SEC END_SEC
-%token ARRAY ARRAY_SEPERATOR ARRAY_TYPE
+%token PROGRAM VAR FUNCTION PROCEDURE BEGIN_SEC END_SEC COLON
+%token ARRAY ARRAY_SEPERATOR ARRAY_TYPE ARRAY_START ARRAY_END
 %token IF THEN ELSE WHILE DO
 %token INTEGER REAL
 %token PERIOD COMMA
+%token INTEGER_TYPE REAL_TYPE
 
 %%
 
 program:
 	PROGRAM IDENTIFIER 
-	RPAREN identifier_list LPAREN 
-	ENDSTMT PERIOD 
+	RPAREN identifier_list LPAREN ENDSTMT
+	declarations
+	PERIOD 
 	{
 		printf("AWESOME"); 
 	}
@@ -45,6 +47,16 @@ program:
 
 identifier_list:
 	IDENTIFIER | IDENTIFIER COMMA identifier_list   { }
+	;
+
+declarations:
+	/* empty */ | VAR identifier_list COLON type ENDSTMT declarations {}
+	;
+type:
+	standard_type | ARRAY ARRAY_START ARRAY_SEPERATOR ARRAY_END ARRAY_TYPE standard_type {}
+	;
+standard_type:
+	INTEGER_TYPE | REAL_TYPE {};
 	;
 
 /*

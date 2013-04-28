@@ -27,6 +27,7 @@ int 		{digit}+
 
 [*]			return MULOP;
 [;]			return ENDSTMT;
+[:]			return COLON;
 
 [=]			return ASSIGNOP;
 
@@ -36,8 +37,11 @@ function	return FUNCTION;
 procedure	return PROCEDURE;
 begin		return BEGIN_SEC;
 end			return END_SEC;
+
 array		return ARRAY;
+\[			return ARRAY_START;
 \.\.		return ARRAY_SEPERATOR;
+\]			return ARRAY_END;
 of			return ARRAY_TYPE;
 
 if			return IF;
@@ -47,8 +51,8 @@ else		return ELSE;
 while		return WHILE;
 do			return DO;
 
-integer		return INTEGER;
-real		return REAL;
+integer		return INTEGER_TYPE;
+real		return REAL_TYPE;
 
 [.]			return PERIOD;
 [,]			return COMMA;
