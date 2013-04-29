@@ -6,6 +6,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "tree.h"
 #define YYSTYPE tree_t*
 
 void yyerror(const char *str)
@@ -45,12 +46,22 @@ program:
 	compound_statement
 	PERIOD 
 	{
+		$$ = make_tree();
+		PROGRAM_N($$) = make_program(IDENTIFIER_N($2));
 		printf("AWESOME\n"); 
 	}
 	;
 
 identifier_list:
-	IDENTIFIER | IDENTIFIER COMMA identifier_list   { }
+	IDENTIFIER 
+	{
+		$$ = $1;
+	}
+	|
+	IDENTIFIER COMMA identifier_list   
+	{
+		id_list_prepend(IDENTIFIER_LIST_N($3), 
+	}
 	;
 
 declarations:

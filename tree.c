@@ -1,3 +1,14 @@
+#include <stdlib.h>
+#include "tree.h"
+
+tree_t * make_tree() {
+	tree_t * node = malloc(sizeof(tree_t));
+	return node;
+}
+
+
+/*
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -63,4 +74,4 @@ void print_tree( tree_t *t, int spaces )
 
 
 
-
+*/
