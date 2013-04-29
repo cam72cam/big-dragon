@@ -1,10 +1,14 @@
 #ifndef INDENTIFIER_H
 #define INDENTIFIER_H
 
+typedef struct identifier_s identifier_t;
+
 #define MAX_IDENT 40
+#include "tree.h"
+
 typedef struct identifier_s {
 	char * ident;
 } identifier_t;
 
-identifier_t *make_identifier(char * ident);
+tree_t * make_identifier(char * ident);
 #endif

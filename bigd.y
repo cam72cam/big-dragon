@@ -46,8 +46,7 @@ program:
 	compound_statement
 	PERIOD 
 	{
-		$$ = make_tree();
-		PROGRAM_N($$) = make_program(IDENTIFIER_N($2));
+		$$ = make_program(IDENTIFIER_N($2));
 		printf("AWESOME\n"); 
 	}
 	;
@@ -60,7 +59,7 @@ identifier_list:
 	|
 	IDENTIFIER COMMA identifier_list   
 	{
-		id_list_prepend(IDENTIFIER_LIST_N($3), 
+//		id_list_prepend(IDENTIFIER_LIST_N($3));
 	}
 	;
 

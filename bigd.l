@@ -35,11 +35,11 @@ assignop	{colon}=
 {addop}		return ADDOP;
 
 [;]			return ENDSTMT;
-{colon}		return COLON;
+{colon}			return COLON;
 {assignop}		return ASSIGNOP;
 
 
-program		return PROGRAM;
+program			return PROGRAM;
 var			return VAR;
 function		return FUNCTION;
 procedure		return PROCEDURE;
@@ -61,21 +61,20 @@ do			return DO;
 
 not			return NOT;
 
-integer		return INTEGER_TYPE;
+integer			return INTEGER_TYPE;
 real			return REAL_TYPE;
 
 [.]			return PERIOD;
 [,]			return COMMA;
 
 {ident}	{
-			yylval = make_tree();
-			IDENTIFIER_N(yylval) = make_identifier(yytext);
+			yylval = make_identifier(yytext);
 			return IDENTIFIER;
 		}
 
 
 [\n]			/* ignore end of line */;
-[ \t]+		/* ignore whitespace */;
+[ \t]+			/* ignore whitespace */;
 %%
 
 
