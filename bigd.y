@@ -47,7 +47,7 @@ program:
 	compound_statement
 	PERIOD 
 	{
-		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($4), DECLARATIONS_N($7));
+		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($4), DECLARATIONS_N($7), SUBPROGRAM_DECLARATIONS_N($8), STATEMENT_LIST_N($9));
 		print_program(PROGRAM_N($$), 4);
 	}
 	;
@@ -92,41 +92,107 @@ standard_type:
 	;
 
 subprogram_declarations: 
-	/* empty */ | subprogram_declarations subprogram_declaration ENDSTMT {}
+	/* empty */
+	{
+		$$ = make_subprogram_declarations(NULL,NULL);
+	}
+	| subprogram_declarations subprogram_declaration ENDSTMT 
+	{
+		$$ = make_subprogram_declarations(SUBPROGRAM_DECLARATION_N($2), SUBPROGRAM_DECLARATIONS_N($1));
+	}
 	;
 subprogram_declaration:
-	subprogram_head declarations compound_statement {}
+	subprogram_head declarations compound_statement 
+	{
+		$$ = make_subprogram_declaration(SUBPROGRAM_HEAD_N($1), DECLARATIONS_N($2), STATEMENT_LIST_N($3));
+	}
 	;
 subprogram_head:
-	FUNCTION IDENTIFIER arguments COLON standard_type ENDSTMT {}
+	FUNCTION IDENTIFIER arguments COLON standard_type ENDSTMT 
+	{
+		$$ = make_subprogram_head(IDENTIFIER_N($2), PARAMETER_LIST_N($3), TYPE_N($5));
+	}
 	;
 arguments:
-	/* empty */ | RPAREN parameter_list LPAREN {}
+	/* empty */ 
+	{
+		$$ = make_parameter_list(NULL, NULL, NULL);
+	}
+	| RPAREN parameter_list LPAREN 
+	{
+		$$ = $2;
+	}
 	;
 parameter_list:
-	identifier_list COLON type | parameter_list ENDSTMT identifier_list COLON type
+	identifier_list COLON type
+	{
+		$$ = make_parameter_list(IDENTIFIER_LIST_N($1), TYPE_N($3), NULL);
+	}
+	| parameter_list ENDSTMT identifier_list COLON type
+	{
+		$$ = make_parameter_list(IDENTIFIER_LIST_N($3), TYPE_N($5), PARAMETER_LIST_N($1));
+	}
 	;
-compound_statement:
+compound_statement: //statement_list
 	BEGIN_SEC optional_statements END_SEC
+	{
+		$$ = $2;
+	}
 	;
-optional_statements:
-	/* empty */ | statement_list
+optional_statements: //statement_list
+	/* empty */
+	{
+		$$ = make_statement_list(NULL, NULL);
+	}
+	| statement_list
+	{
+		$$ = $1;
+	}
 	;
 statement_list:
-	statement | statement_list ENDSTMT statement
+	statement 
+	{
+		$$ = make_statement_list(STATEMENT_N($1), NULL);
+	}
+	| statement_list ENDSTMT statement
+	{
+		$$ = make_statement_list(STATEMENT_N($3), STATEMENT_LIST_N($1));
+	}
 	;
 statement:
-	variable ASSIGNOP expression |
-	procedure_statement |
-	compound_statement |
-	IF expression THEN statement elsey |
-	WHILE expression DO statement
+	variable ASSIGNOP expression 
+	{
+		$$ = make_statement(ASSIGNMENT_N(make_assignment(VARIABLE_N($1), EXPRESSION_N($3))));
+	}
+	| procedure_statement 
+	{
+		$$ = make_statement($1);
+	}
+	| compound_statement 
+	{
+		$$ = make_statement($1);
+	}
+	| IF expression THEN statement elsey
+	{
+		$$ = make_statement(make_if(EXPRESSION_N($2), STATEMENT_N($4))); //TODO
+	}
+	| WHILE expression DO statement
+	{
+		$$ = make_statement(make_while(EXPRESSION_N($2), STATEMENT_N($4)));
+	}
 	;
 elsey:
 	/*empty*/ | ELSE statement
 	;
 variable:
-	IDENTIFIER | IDENTIFIER ARRAY_START expression ARRAY_END
+	IDENTIFIER 
+	{
+		$$ = make_variable(IDENTIFIER_N($1), NULL);
+	}
+	| IDENTIFIER ARRAY_START expression ARRAY_END
+	{
+		$$ = make_variable(IDENTIFIER_N($1), EXPRESSION_N($3));
+	}
 	;
 procedure_statement:
 	IDENTIFIER 

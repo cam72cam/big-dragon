@@ -41,4 +41,5 @@ void	* print_relop(relop_t * node, int spaces) {
 			fprintf(stderr, "RELOP: GREATER THAN OR EQUAL");
 			break;
 	}
+	fprintf(stderr, "\n");
 }

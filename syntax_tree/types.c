@@ -10,10 +10,10 @@ void	* print_type(type_t * node, int spaces) {
 	print_spaces(spaces);
 	switch(node->type) {
 		case INTEGER_TYPE:
-			fprintf(stderr, "TYPE: INTEGER");
+			fprintf(stderr, "TYPE: INTEGER\n");
 			break;
 		case REAL_TYPE:
-			fprintf(stderr, "TYPE: REAL");
+			fprintf(stderr, "TYPE: REAL\n");
 			break;
 	}
 }

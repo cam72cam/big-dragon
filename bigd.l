@@ -24,7 +24,10 @@ assignop	{colon}=
 
  /* tokens */
 
-{int}+		{ /*yylval = make_tree(INTEGER, NULL, NULL); yylval->attribute.ival = atof(yytext);*/ return INTEGER; }
+{int}+	{
+				yylval = make_integer(atoi(yytext));
+				return INTEGER;
+		}
 
 [(]				return RPAREN;
 [)]				return LPAREN;

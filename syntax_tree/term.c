@@ -10,10 +10,10 @@ tree_t	* make_term(term_t * left, mulop_t * op, factor_t * right) {
 }
 void	* print_term(term_t * node, int spaces) {
 	print_spaces(spaces);
-	fprintf(stderr, "TERM: ");
+	fprintf(stderr, "TERM: \n");
 	if(node->left != NULL)
 		print_term(node->left, spaces + SP_INDENT);
-	if(node->right != NULL)
+	if(node->op != NULL)
 		print_mulop(node->op, spaces + SP_INDENT);
 	print_factor(node->right, spaces + SP_INDENT);
 }

@@ -10,7 +10,7 @@ tree_t	* make_expression(simple_expression_t * left, relop_t * op, simple_expres
 }
 void	* print_expression(expression_t * node, int spaces){
 	print_spaces(spaces);
-	fprintf(stderr, "EXPRESSION: ");
+	fprintf(stderr, "EXPRESSION: \n");
 	print_simple_expression(node->left, spaces + SP_INDENT);
 	if(node->op != NULL)
 		print_relop(node->op, spaces + SP_INDENT);
