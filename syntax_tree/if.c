@@ -1,10 +1,11 @@
 #include "if.h"
 #include <stdlib.h>
 
-tree_t	* make_if(expression_t * expression, statement_t * statement) {
+tree_t	* make_if(expression_t * expression, statement_t * statement, else_t * elsey) {
 	if_t	* node	= malloc(sizeof(if_t));
 	node->expression		= expression;
 	node->statement			= statement;
+	node->elsey				= elsey;
 	return make_tree(node,  IF_T);
 }
 
@@ -15,4 +16,5 @@ void   print_if(if_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "THEN:\n");
 	print_statement(node->statement, spaces + SP_INDENT);
+	print_else(node->elsey, spaces + SP_INDENT);
 }

@@ -174,17 +174,33 @@ statement:
 	{
 		$$ = make_statement($1);
 	}
-	| IF expression THEN statement elsey
+	| if
 	{
-		$$ = make_statement(make_if(EXPRESSION_N($2), STATEMENT_N($4))); //TODO
+		$$ = $1;
 	}
 	| WHILE expression DO statement
 	{
 		$$ = make_statement(make_while(EXPRESSION_N($2), STATEMENT_N($4)));
 	}
 	;
-elsey:
-	/*empty*/ | ELSE statement
+if:
+	IF expression THEN statement else
+	{
+		$$ = make_statement(make_if(EXPRESSION_N($2), STATEMENT_N($4), ELSE_N($5)));
+	}
+else:
+	/*empty*/ 
+	{
+		$$ = make_else(NULL);
+	}
+	| ELSE statement 
+	{
+		$$ = make_else($2);
+	}
+	| ELSE if
+	{
+		$$ = make_else($2);
+	}
 	;
 variable:
 	IDENTIFIER 

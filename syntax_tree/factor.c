@@ -16,7 +16,7 @@ void	print_factor(factor_t * node, int spaces) {
 			print_procedure_statement(PROCEDURE_STATEMENT_N(node->node), spaces);
 			break;
 		case INTEGER_T:
-			print_integer(IDENTIFIER_N(node->node), spaces);
+			print_integer(INTEGER_N(node->node), spaces);
 			break;
 		case EXPRESSION_T:
 			print_expression(EXPRESSION_N(node->node), spaces);

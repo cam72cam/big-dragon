@@ -32,8 +32,9 @@ typedef enum {
 	VARIABLE_T,					//20
 	ASSIGNMENT_T,
 	IF_T,
+	ELSE_T,
 	WHILE_T,
-	INTEGER_T,
+	INTEGER_T,					//25
 	
 } tree_types;
 
@@ -57,6 +58,7 @@ typedef enum {
 #include "variable.h"
 #include "assignment.h"
 #include "if.h"
+#include "else.h"
 #include "while.h"
 #include "subprogram_head.h"
 #include "subprogram_declaration.h"
@@ -81,6 +83,7 @@ typedef enum {
 #define VARIABLE_N(x)				x->type == VARIABLE_T				? ((variable_t*)x->node)			: (tree_error(x, VARIABLE_T),			NULL)
 #define ASSIGNMENT_N(x)				x->type == ASSIGNMENT_T				? ((assignment_t*)x->node)			: (tree_error(x, ASSIGNMENT_T),			NULL)
 #define IF_N(x)						x->type == IF_T						? ((if_t*)x->node)					: (tree_error(x, IF_T),					NULL)
+#define ELSE_N(x)					x->type == ELSE_T					? ((else_t*)x->node)				: (tree_error(x, ELSE_T),				NULL)
 #define WHILE_N(x)					x->type == WHILE_T					? ((while_t*)x->node)				: (tree_error(x, WHILE_T),				NULL)
 #define PARAMETER_LIST_N(x)			x->type == PARAMETER_LIST_T			? ((parameter_list_t*)x->node)		: (tree_error(x, PARAMETER_LIST_T),		NULL)
 #define STATEMENT_LIST_N(x)			x->type == STATEMENT_LIST_T			? ((statement_list_t*)x->node)		: (tree_error(x, STATEMENT_LIST_T),		NULL)

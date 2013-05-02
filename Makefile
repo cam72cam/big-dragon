@@ -1,6 +1,6 @@
 SHELL   = /bin/bash
 
-SYN_TREE_SRC	= tree.c identifier.c identifier_list.c program.c types.c declarations.c factor.c expression.c expression_list.c simple_expression.c term.c relop.c addop.c mulop.c procedure_statement.c subprogram_declaration.c subprogram_declarations.c subprogram_head.c parameter_list.c statement.c variable.c statement_list.c assignment.c if.c while.c integer.c
+SYN_TREE_SRC	= tree.c identifier.c identifier_list.c program.c types.c declarations.c factor.c expression.c expression_list.c simple_expression.c term.c relop.c addop.c mulop.c procedure_statement.c subprogram_declaration.c subprogram_declarations.c subprogram_head.c parameter_list.c statement.c variable.c statement_list.c assignment.c if.c else.c while.c integer.c
 SYN_TREE_OBJ	= $(SYN_TREE_SRC:%.c=syntax_tree/%.o)
 SYNTAX_TREE		= $(SYN_TREE_SRC:%.c=syntax_tree/%)
 

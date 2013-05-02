@@ -32,4 +32,5 @@ void	  print_mulop(mulop_t * node, int spaces) {
 			fprintf(stderr, "mulop: MOD");
 			break;
 	}
+	fprintf(stderr, "\n");
 }
