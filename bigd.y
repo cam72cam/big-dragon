@@ -46,8 +46,8 @@ program:
 	compound_statement
 	PERIOD 
 	{
-		$$ = make_program(IDENTIFIER_N($2));
-		printf("AWESOME\n"); 
+		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($4));
+		print_program(PROGRAM_N($$), 4);
 	}
 	;
 
@@ -60,12 +60,14 @@ identifier_list:
 	IDENTIFIER COMMA identifier_list   
 	{
 		$$ = make_identifier_list(IDENTIFIER_N($1), IDENTIFIER_LIST_N($3));
-		print_identifier_list(IDENTIFIER_LIST_N($$), 0);
 	}
 	;
 
 declarations:
-	/* empty */ | VAR identifier_list COLON type ENDSTMT declarations {}
+	/* empty */ | VAR identifier_list COLON type ENDSTMT declarations 
+	{
+		
+	}
 	;
 type:
 	standard_type | ARRAY ARRAY_START ARRAY_SEPERATOR ARRAY_END ARRAY_TYPE standard_type {}

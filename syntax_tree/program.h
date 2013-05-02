@@ -8,8 +8,9 @@ typedef struct program_s program_t;
 typedef struct program_s
 {
 	identifier_t * name;
+	identifier_list_t * args;
 } program_t;
 
-tree_t	* make_program (identifier_t * name);
+tree_t	* make_program (identifier_t * name, identifier_list_t * args);
 void 	* print_program(program_t * node, int spaces);
 #endif
