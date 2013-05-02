@@ -8,7 +8,7 @@ tree_t * make_subprogram_declarations(subprogram_declaration_t * declaration, su
 	return make_tree(node, SUBPROGRAM_DECLARATIONS_T);
 }
 
-void * print_subprogram_declarations(subprogram_declarations_t * node, int spaces) {
+void   print_subprogram_declarations(subprogram_declarations_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "SUBPROGRAM_DECLARATIONS:\n");
 	for(; node != NULL && node->declaration != NULL; node = node->next)

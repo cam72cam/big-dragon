@@ -10,7 +10,7 @@ tree_t *make_identifier(char * ident) {
 	return make_tree(node, IDENTIFIER_T);
 }
 
-void * print_identifier(identifier_t * node, int spaces) {
+void   print_identifier(identifier_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "IDENT: %s\n", node->ident);
 }

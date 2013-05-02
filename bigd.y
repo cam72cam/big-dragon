@@ -126,6 +126,7 @@ arguments:
 parameter_list:
 	identifier_list COLON type
 	{
+		print_identifier_list(IDENTIFIER_LIST_N($1), 0);
 		$$ = make_parameter_list(IDENTIFIER_LIST_N($1), TYPE_N($3), NULL);
 	}
 	| parameter_list ENDSTMT identifier_list COLON type

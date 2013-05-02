@@ -8,7 +8,7 @@ tree_t	* make_term(term_t * left, mulop_t * op, factor_t * right) {
 	node->right	= right;
 	return make_tree(node, TERM_T);
 }
-void	* print_term(term_t * node, int spaces) {
+void	  print_term(term_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "TERM: \n");
 	if(node->left != NULL)

@@ -8,7 +8,7 @@ tree_t * make_identifier_list(identifier_t * ident, identifier_list_t * next) {
 	return make_tree(node, IDENTIFIER_LIST_T);
 }
 
-void * print_identifier_list(identifier_list_t * node, int spaces) {
+void   print_identifier_list(identifier_list_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "IDENT_LIST:\n");
 	for(; node != NULL; node = node->next)

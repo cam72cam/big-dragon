@@ -12,6 +12,6 @@ typedef struct expression_s {
 } expression_t;
 
 tree_t	* make_expression(simple_expression_t * left, relop_t * op, simple_expression_t * right);
-void	* print_expression(expression_t * node, int spaces);
+void	  print_expression(expression_t * node, int spaces);
 
 #endif

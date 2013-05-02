@@ -11,5 +11,5 @@ typedef struct variable_s {
 } variable_t;
 
 tree_t	* make_variable(identifier_t * ident, expression_t * expression);
-void	* print_variable(variable_t * node, int spaces);
+void	  print_variable(variable_t * node, int spaces);
 #endif

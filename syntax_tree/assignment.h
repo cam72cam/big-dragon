@@ -11,5 +11,5 @@ typedef struct assignment_s {
 } assignment_t;
 
 tree_t	* make_assignment(variable_t * variable, expression_t * expression);
-void	* print_assignment(assignment_t * node, int spaces);
+void	  print_assignment(assignment_t * node, int spaces);
 #endif

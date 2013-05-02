@@ -12,6 +12,6 @@ typedef struct term_s {
 } term_t;
 
 tree_t	* make_term(term_t * left, mulop_t * op, factor_t * right);
-void	* print_term(term_t * node, int spaces);
+void	  print_term(term_t * node, int spaces);
 
 #endif

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "addop.h"
 
 tree_t	* make_addop(char * type) {
@@ -13,7 +14,7 @@ tree_t	* make_addop(char * type) {
 	return make_tree(node, ADDOP_T);
 }
 
-void	* print_addop(addop_t * node, int spaces) {
+void	print_addop(addop_t * node, int spaces) {
 	print_spaces(spaces);
 	switch(node->type) {
 		case PLUS:

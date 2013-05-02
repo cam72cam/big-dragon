@@ -6,7 +6,7 @@ tree_t	* make_type(int type) {
 	node->type = type;
 	return make_tree(node, TYPE_T);
 }
-void	* print_type(type_t * node, int spaces) {
+void	  print_type(type_t * node, int spaces) {
 	print_spaces(spaces);
 	switch(node->type) {
 		case INTEGER_TYPE:

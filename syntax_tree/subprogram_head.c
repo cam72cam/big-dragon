@@ -9,7 +9,7 @@ tree_t	* make_subprogram_head(identifier_t * ident, parameter_list_t * params, t
 	return make_tree(node,  SUBPROGRAM_HEAD_T);
 }
 
-void * print_subprogram_head(subprogram_head_t * node, int spaces) {
+void   print_subprogram_head(subprogram_head_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "SUBPROGRAM HEAD:\n");
 	print_identifier(node->ident, spaces + SP_INDENT);

@@ -8,7 +8,7 @@ tree_t	* make_declarations(identifier_list_t * vars, type_t * type, declarations
 	node->next = next;
 	return make_tree(node, DECLARATIONS_T);
 }
-void	* print_declarations(declarations_t * node, int spaces) {
+void	  print_declarations(declarations_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "DECLARATIONS:\n");
 	for(; node->next != NULL; node = node->next) {

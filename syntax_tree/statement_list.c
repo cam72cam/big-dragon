@@ -8,7 +8,7 @@ tree_t	* make_statement_list(statement_t * statement, statement_list_t * next) {
 	return make_tree(node, STATEMENT_LIST_T);
 }
 
-void * print_statement_list(statement_list_t * node, int spaces) {
+void   print_statement_list(statement_list_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "STATEMENT_LIST:\n");
 	for(; node != NULL; node = node->next)

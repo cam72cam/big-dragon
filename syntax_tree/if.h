@@ -11,5 +11,5 @@ typedef struct if_s {
 } if_t;
 
 tree_t	* make_if(expression_t * expression, statement_t * statement);
-void	* print_if(if_t * node, int spaces);
+void	  print_if(if_t * node, int spaces);
 #endif

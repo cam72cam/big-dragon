@@ -8,7 +8,7 @@ tree_t	* make_simple_expression(simple_expression_t * left, addop_t * op, term_t
 	node->right	= right;
 	return make_tree(node, SIMPLE_EXPRESSION_T);
 }
-void	* print_simple_expression(simple_expression_t * node, int spaces) {
+void	  print_simple_expression(simple_expression_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "SIMPLE EXPRESSION: \n");
 	if(node->left != NULL)

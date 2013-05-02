@@ -8,7 +8,7 @@ tree_t	* make_assignment(variable_t * variable, expression_t * expression) {
 	return make_tree(node,  ASSIGNMENT_T);
 }
 
-void * print_assignment(assignment_t * node, int spaces) {
+void   print_assignment(assignment_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "ASSIGNMENT:\n");
 	print_variable(node->variable, spaces + SP_INDENT);

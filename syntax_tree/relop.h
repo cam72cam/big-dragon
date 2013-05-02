@@ -19,6 +19,6 @@ typedef struct relop_s {
 } relop_t;
 
 tree_t	* make_relop(char * op);
-void	* print_relop(relop_t * node, int spaces);
+void	  print_relop(relop_t * node, int spaces);
 
 #endif

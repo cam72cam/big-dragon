@@ -8,7 +8,7 @@ tree_t	* make_while(expression_t * expression, statement_t * statement) {
 	return make_tree(node,  WHILE_T);
 }
 
-void * print_while(while_t * node, int spaces) {
+void   print_while(while_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "WHILE:\n");
 	print_expression(node->expression, spaces + SP_INDENT);

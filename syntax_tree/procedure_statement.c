@@ -8,7 +8,7 @@ tree_t	* make_procedure_statement(identifier_t * ident, expression_list_t * para
 	return make_tree(node, PROCEDURE_STATEMENT_T);
 }
 
-void * print_procedure_statement(procedure_statement_t * node, int spaces) {
+void   print_procedure_statement(procedure_statement_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "PROCEDURE_STATEMENT:\n");
 	print_identifier(node->identifier, spaces + SP_INDENT);

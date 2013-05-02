@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "mulop.h"
 
 tree_t	* make_mulop(char * type) {
@@ -15,7 +16,7 @@ tree_t	* make_mulop(char * type) {
 	return make_tree(node, MULOP_T);
 }
 
-void	* print_mulop(mulop_t * node, int spaces) {
+void	  print_mulop(mulop_t * node, int spaces) {
 	print_spaces(spaces);
 	switch(node->type) {
 		case MULT:

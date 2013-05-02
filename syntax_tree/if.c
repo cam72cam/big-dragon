@@ -8,7 +8,7 @@ tree_t	* make_if(expression_t * expression, statement_t * statement) {
 	return make_tree(node,  IF_T);
 }
 
-void * print_if(if_t * node, int spaces) {
+void   print_if(if_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "IF:\n");
 	print_expression(node->expression, spaces + SP_INDENT);

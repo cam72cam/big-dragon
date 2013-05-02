@@ -12,5 +12,5 @@ typedef struct declarations_s {
 } declarations_t;
 
 tree_t	* make_declarations(identifier_list_t * vars, type_t * type, declarations_t * next);
-void	* print_declarations(declarations_t * node, int spaces);
+void	  print_declarations(declarations_t * node, int spaces);
 #endif

@@ -4,7 +4,7 @@ SYN_TREE_SRC	= tree.c identifier.c identifier_list.c program.c types.c declarati
 SYN_TREE_OBJ	= $(SYN_TREE_SRC:%.c=syntax_tree/%.o)
 SYNTAX_TREE		= $(SYN_TREE_SRC:%.c=syntax_tree/%)
 
-CFLAGS 	= -rdynamic -g
+CFLAGS 	= -rdynamic -g -Wall
 
 main: lex yacc syn_tree
 	cc $(CFLAGS) $(SYN_TREE_OBJ) lex.yy.c y.tab.c -o bigd -DYYSTYPE=tree_t*

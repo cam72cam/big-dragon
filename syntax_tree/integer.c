@@ -7,7 +7,7 @@ tree_t	* make_integer(int value) {
 	return make_tree(node,  INTEGER_T);
 }
 
-void	* print_integer(integer_t * node, int spaces) {
+void	  print_integer(integer_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "INTEGER: %d\n", node->value);
 }

@@ -9,7 +9,7 @@ tree_t	* make_subprogram_declaration(subprogram_head_t	* head,	declarations_t * 
 	return make_tree(node,  SUBPROGRAM_DECLARATION_T);
 }
 
-void * print_subprogram_declaration(subprogram_declaration_t * node, int spaces) {
+void   print_subprogram_declaration(subprogram_declaration_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "SUBPROGRAM DECLARATION:\n");
 	print_subprogram_head(node->head, spaces + SP_INDENT);

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "relop.h"
 
 tree_t	* make_relop(char * type) {
@@ -19,7 +20,7 @@ tree_t	* make_relop(char * type) {
 	return make_tree(node, RELOP_T);
 }
 
-void	* print_relop(relop_t * node, int spaces) {
+void	  print_relop(relop_t * node, int spaces) {
 	print_spaces(spaces);
 	switch(node->type) {
 		case EQ:
