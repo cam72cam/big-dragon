@@ -1,12 +1,12 @@
 %code requires
 {
-#include "tree.h"
+#include "syntax_tree/tree.h"
 }
 
 %{
 #include <stdio.h>
 #include <string.h>
-#include "tree.h"
+#include "syntax_tree/tree.h"
 #define YYSTYPE tree_t*
 
 void yyerror(const char *str)

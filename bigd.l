@@ -1,6 +1,6 @@
 %{
 #include "y.tab.h"
-#include "tree.h"
+#include "syntax_tree/tree.h"
 %}
 
 
@@ -26,50 +26,50 @@ assignop	{colon}=
 
 {int}+		{ /*yylval = make_tree(INTEGER, NULL, NULL); yylval->attribute.ival = atof(yytext);*/ return INTEGER; }
 
-[(]			return RPAREN;
-[)]			return LPAREN;
+[(]				return RPAREN;
+[)]				return LPAREN;
 
-{relop}		return RELOP;
-{mulop}		return MULOP;
-{sign}		return SIGN;
-{addop}		return ADDOP;
+{relop}			return RELOP;
+{mulop}			return MULOP;
+{sign}			return SIGN;
+{addop}			return ADDOP;
 
-[;]			return ENDSTMT;
+[;]				return ENDSTMT;
 {colon}			return COLON;
 {assignop}		return ASSIGNOP;
 
 
 program			return PROGRAM;
-var			return VAR;
+var				return VAR;
 function		return FUNCTION;
 procedure		return PROCEDURE;
 begin			return BEGIN_SEC;
-end			return END_SEC;
+end				return END_SEC;
 
 array			return ARRAY;
-\[			return ARRAY_START;
+\[				return ARRAY_START;
 \.\.			return ARRAY_SEPERATOR;
-\]			return ARRAY_END;
-of			return ARRAY_TYPE;
+\]				return ARRAY_END;
+of				return ARRAY_TYPE;
 
-if			return IF;
+if				return IF;
 then			return THEN;
 else			return ELSE;
 
 while			return WHILE;
-do			return DO;
+do				return DO;
 
-not			return NOT;
+not				return NOT;
 
 integer			return INTEGER_TYPE;
 real			return REAL_TYPE;
 
-[.]			return PERIOD;
-[,]			return COMMA;
+[.]				return PERIOD;
+[,]				return COMMA;
 
 {ident}	{
-			yylval = make_identifier(yytext);
-			return IDENTIFIER;
+				yylval = make_identifier(yytext);
+				return IDENTIFIER;
 		}
 
 
