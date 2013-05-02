@@ -6,3 +6,9 @@ tree_t * make_program(identifier_t * name) {
 	node->name = name;
 	return make_tree(node, PROGRAM_T);
 }
+
+void * print_program(program_t * node, int spaces) {
+	print_spaces(spaces);
+	fprintf(stderr, "PROGRAM:\n");
+	print_identifier(node->name, spaces + SP_INDENT);
+}

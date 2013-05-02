@@ -10,5 +10,6 @@ typedef struct identifier_s {
 	char * ident;
 } identifier_t;
 
-tree_t * make_identifier(char * ident);
+tree_t	* make_identifier(char * ident);
+void	* print_identifier(identifier_t * node, int spaces);
 #endif

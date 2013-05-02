@@ -10,6 +10,6 @@ typedef struct program_s
 	identifier_t * name;
 } program_t;
 
-tree_t * make_program(identifier_t * name);
-
+tree_t	* make_program (identifier_t * name);
+void 	* print_program(program_t * node, int spaces);
 #endif

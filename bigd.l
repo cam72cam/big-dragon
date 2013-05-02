@@ -15,7 +15,7 @@ int 		{digit}+
 relop		[=|<>|<|<=|>|>=]
 mulop		[*|/]|div|mod|and
 sign		[+|-]
-addop		[{sign}|or]
+addop		{sign}|or
 
 colon		[:]
 assignop	{colon}=

@@ -54,12 +54,13 @@ program:
 identifier_list:
 	IDENTIFIER 
 	{
-		$$ = $1;
+		$$ = make_identifier_list(IDENTIFIER_N($1), NULL);
 	}
 	|
 	IDENTIFIER COMMA identifier_list   
 	{
-//		id_list_prepend(IDENTIFIER_LIST_N($3));
+		$$ = make_identifier_list(IDENTIFIER_N($1), IDENTIFIER_LIST_N($3));
+		print_identifier_list(IDENTIFIER_LIST_N($$), 0);
 	}
 	;
 
