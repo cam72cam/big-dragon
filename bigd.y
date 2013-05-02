@@ -251,13 +251,13 @@ term:
 	}
 	;
 factor:
-	IDENTIFIER
+	IDENTIFIER RPAREN expression_list LPAREN
+	{
+		$$ = make_factor(make_procedure_statement(IDENTIFIER_N($1), EXPRESSION_LIST_N($3)));
+	}
+	| IDENTIFIER
 	{
 		$$ = make_factor($1);
-	}
-	| IDENTIFIER RPAREN expression_list LPAREN
-	{
-		$$ = make_factor(PROCEDURE_STATEMENT_N(make_procedure_statement(IDENTIFIER_N($1), EXPRESSION_LIST_N($3))));
 	}
 	| INTEGER
 	{
