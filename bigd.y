@@ -132,7 +132,14 @@ procedure_statement:
 	IDENTIFIER | IDENTIFIER RPAREN expression_list LPAREN {	}
 	;
 expression_list:
-	expression | expression_list COMMA expression
+	expression
+	{
+		$$ = make_expression_list(EXPRESSION_N($1), NULL);
+	}
+	| expression_list COMMA expression
+	{
+		$$ = make_expression_list(EXPRESSION_N($3), EXPRESSION_LIST_N($1));
+	}
 	;
 expression:
 	simple_expression
