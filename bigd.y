@@ -129,7 +129,14 @@ variable:
 	IDENTIFIER | IDENTIFIER ARRAY_START expression ARRAY_END
 	;
 procedure_statement:
-	IDENTIFIER | IDENTIFIER RPAREN expression_list LPAREN {	}
+	IDENTIFIER 
+	{
+		$$ = make_procedure_statement(IDENTIFIER_N($1), NULL);
+	}
+	| IDENTIFIER RPAREN expression_list LPAREN 
+	{
+		$$ = make_procedure_statement(IDENTIFIER_N($1), EXPRESSION_LIST_N($3));
+	}
 	;
 expression_list:
 	expression
@@ -182,8 +189,7 @@ factor:
 	}
 	| IDENTIFIER RPAREN expression_list LPAREN
 	{
-		$$ = make_factor($1);
-//		$$ = make_factor(make_function_call($1, $3));
+		$$ = make_factor(PROCEDURE_STATEMENT_N(make_procedure_statement(IDENTIFIER_N($1), EXPRESSION_LIST_N($3))));
 	}
 	| INTEGER
 	{
