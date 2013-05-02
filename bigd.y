@@ -104,6 +104,7 @@ arguments:
 	;
 parameter_list:
 	identifier_list COLON type | parameter_list ENDSTMT identifier_list COLON type
+	;
 compound_statement:
 	BEGIN_SEC optional_statements END_SEC
 	;
@@ -133,19 +134,63 @@ expression_list:
 	expression | expression_list COMMA expression
 	;
 expression:
-	simple_expression | simple_expression RELOP simple_expression
+	simple_expression
+	{
+		$$ = make_expression(SIMPLE_EXPRESSION_N($1), NULL, NULL);
+	}
+	| simple_expression RELOP simple_expression
+	{
+		$$ = make_expression(SIMPLE_EXPRESSION_N($1),RELOP_N($2),SIMPLE_EXPRESSION_N($3));
+	}
 	;
 simple_expression:
-	term | SIGN term | simple_expression ADDOP term
+	term
+	{
+		$$ = make_simple_expression(NULL,NULL,TERM_N($1));
+	}
+	| SIGN term
+	{
+		$$ = make_simple_expression(NULL,ADDOP_N($1),TERM_N($2));
+	}
+	| simple_expression ADDOP term
+	{
+		$$ = make_simple_expression(SIMPLE_EXPRESSION_N($1),ADDOP_N($2),TERM_N($3));
+	}
 	;
 term:
-	factor | term MULOP factor
+	factor
+	{
+		$$ = make_term(NULL, NULL, FACTOR_N($1));
+	}
+	| term MULOP factor
+	{
+		$$ = make_term(TERM_N($1), MULOP_N($2), FACTOR_N($3));
+	}
 	;
 factor:
-	IDENTIFIER 
+	IDENTIFIER
+	{
+		$$ = make_factor($1);
+	}
 	| IDENTIFIER RPAREN expression_list LPAREN
+	{
+		$$ = make_factor($1);
+//		$$ = make_factor(make_function_call($1, $3));
+	}
 	| INTEGER
+	{
+		$$ = make_factor($1);
+	}
 	| RPAREN expression LPAREN
+	{
+		$$ = make_factor($1);
+	}
 	| NOT factor
+	{
+		$$ = $1;
+		factor_t * factor = FACTOR_N($$);
+		factor->not = true;
+	}
 	;
+	
 %%

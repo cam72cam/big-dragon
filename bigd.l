@@ -29,11 +29,22 @@ assignop	{colon}=
 [(]				return RPAREN;
 [)]				return LPAREN;
 
-{relop}			return RELOP;
-{mulop}			return MULOP;
-{sign}			return SIGN;
-{addop}			return ADDOP;
-
+{relop}	{
+				yylval = make_relop(yytext);
+				return RELOP;
+		}
+{mulop}	{
+				yylval = make_mulop(yytext);
+				return MULOP;
+		}
+{sign}	{
+				yylval = make_addop(yytext);
+				return SIGN;
+		}
+{addop}	{
+				yylval = make_addop(yytext);
+				return SIGN;
+		}
 [;]				return ENDSTMT;
 {colon}			return COLON;
 {assignop}		return ASSIGNOP;
