@@ -155,9 +155,9 @@ statement_list:
 	{
 		$$ = make_statement_list(STATEMENT_N($1), NULL);
 	}
-	| statement_list ENDSTMT statement
+	| statement ENDSTMT statement_list
 	{
-		$$ = make_statement_list(STATEMENT_N($3), STATEMENT_LIST_N($1));
+		$$ = make_statement_list(STATEMENT_N($1), STATEMENT_LIST_N($3));
 	}
 	;
 statement:
