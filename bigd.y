@@ -163,7 +163,8 @@ statement_list:
 statement:
 	variable ASSIGNOP expression 
 	{
-		$$ = make_statement(ASSIGNMENT_N(make_assignment(VARIABLE_N($1), EXPRESSION_N($3))));
+		
+		$$ = make_statement(make_assignment(VARIABLE_N($1), EXPRESSION_N($3)));
 	}
 	| procedure_statement 
 	{
