@@ -10,16 +10,22 @@ typedef struct tree_s tree_t;
 typedef enum {
 	PROGRAM_T,
 	IDENTIFIER_T,
-	IDENTIFIER_LIST_T
+	IDENTIFIER_LIST_T,
+	TYPE_T,
+	DECLARATIONS_T,
 } tree_types;
 
 #include "identifier.h"
 #include "identifier_list.h"
+#include "types.h"
+#include "declarations.h"
 #include "program.h"
 
 #define PROGRAM_N(x)			x->type == PROGRAM_T			? ((program_t*)x->node)			: (tree_error(x, PROGRAM_T   ),			NULL)
 #define IDENTIFIER_N(x)			x->type == IDENTIFIER_T			? ((identifier_t*)x->node)		: (tree_error(x, IDENTIFIER_T),			NULL)
 #define IDENTIFIER_LIST_N(x)	x->type == IDENTIFIER_LIST_T	? ((identifier_list_t*)x->node)	: (tree_error(x, IDENTIFIER_LIST_T),	NULL)
+#define TYPE_N(x)				x->type == TYPE_T				? ((type_t*)x->node)			: (tree_error(x, TYPE_T),				NULL)
+#define DECLARATIONS_N(x)		x->type == DECLARATIONS_T		? ((declarations_t*)x->node)	: (tree_error(x, DECLARATIONS_T),		NULL)
 
 typedef struct tree_s {
 	int type;

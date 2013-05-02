@@ -46,7 +46,7 @@ program:
 	compound_statement
 	PERIOD 
 	{
-		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($4));
+		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($4), DECLARATIONS_N($7));
 		print_program(PROGRAM_N($$), 4);
 	}
 	;
@@ -56,24 +56,38 @@ identifier_list:
 	{
 		$$ = make_identifier_list(IDENTIFIER_N($1), NULL);
 	}
-	|
-	IDENTIFIER COMMA identifier_list   
+	| IDENTIFIER COMMA identifier_list   
 	{
 		$$ = make_identifier_list(IDENTIFIER_N($1), IDENTIFIER_LIST_N($3));
 	}
 	;
 
 declarations:
-	/* empty */ | VAR identifier_list COLON type ENDSTMT declarations 
+	/* empty */ 
 	{
-		
+		$$ = make_declarations(NULL,NULL,NULL);
+	} 
+	| VAR identifier_list COLON type ENDSTMT declarations 
+	{
+		$$ = make_declarations(IDENTIFIER_LIST_N($2), TYPE_N($4), DECLARATIONS_N($6));
 	}
 	;
 type:
-	standard_type | ARRAY ARRAY_START ARRAY_SEPERATOR ARRAY_END ARRAY_TYPE standard_type {}
+	standard_type
+	{
+		$$ = $1;
+	}
+	| ARRAY ARRAY_START ARRAY_SEPERATOR ARRAY_END ARRAY_TYPE standard_type {}
 	;
 standard_type:
-	INTEGER_TYPE | REAL_TYPE {};
+	INTEGER_TYPE
+	{
+		$$ = make_type(INTEGER_TYPE);
+	} 
+	| REAL_TYPE 
+	{
+		$$ = make_type(REAL_TYPE);
+	}
 	;
 
 subprogram_declarations: 
