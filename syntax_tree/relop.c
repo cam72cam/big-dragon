@@ -4,17 +4,17 @@
 
 tree_t	* make_relop(char * type) {
 	relop_t * node = malloc(sizeof(relop_t));
-	if(strcmp("=", type)) {
+		   if (0 == strcmp("=", type)) {
 		node->type = EQ;
-	} else if (strcmp("<>", type)) {
+	} else if (0 == strcmp("<>", type)) {
 		node->type = NE;
-	} else if (strcmp("<", type)) {
+	} else if (0 == strcmp("<", type)) {
 		node->type = LT;
-	} else if (strcmp(">", type)) {
+	} else if (0 == strcmp(">", type)) {
 		node->type = GT;
-	} else if (strcmp("<=", type)) {
+	} else if (0 == strcmp("<=", type)) {
 		node->type = LT_EQ;
-	} else if (strcmp(">=", type)) {
+	} else if (0 == strcmp(">=", type)) {
 		node->type = GT_EQ;
 	}
 	return make_tree(node, RELOP_T);

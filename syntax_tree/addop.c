@@ -4,11 +4,11 @@
 
 tree_t	* make_addop(char * type) {
 	addop_t * node = malloc(sizeof(addop_t));
-	       if(strcmp("+", type)) {
+	       if (0 == strcmp("+", type)) {
 		node->type = PLUS;
-	} else if (strcmp("-", type)) {
+	} else if (0 == strcmp("-", type)) {
 		node->type = MINUS;
-	} else if (strcmp("or", type)) {
+	} else if (0 == strcmp("or", type)) {
 		node->type = OR;
 	}
 	return make_tree(node, ADDOP_T);

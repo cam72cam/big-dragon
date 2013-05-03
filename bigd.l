@@ -13,7 +13,7 @@ digit		[0-9]
 ident		{letter}({letter}|{digit})*
 int 		{digit}+
 
-relop		[=|<>|<|<=|>|>=]
+relop		[=|<>|<]|<=|>|>=
 mulop		[*|/]|div|mod|and
 sign		[+|-]
 addop		{sign}|or
