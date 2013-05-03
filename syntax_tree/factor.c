@@ -16,9 +16,6 @@ tree_t* make_factor(tree_t * node) {
 
 void	print_factor(factor_t * node, int spaces) {
 	if(node->node == NULL) {
-		if(node->scoped_ident == NULL) {
-			fprintf(stderr, "SHIT");
-		}
 		print_identifier(node->scoped_ident->node, spaces);
 	} else {
 		switch(node->node->type) {
@@ -40,4 +37,22 @@ void	print_factor(factor_t * node, int spaces) {
 				break;
 		}
 	}
+}
+int 	  typeof_factor(factor_t * node) {
+	if(node->node == NULL) {
+		return node->scoped_ident->node->type->type;
+	} else {
+		switch(node->node->type) {
+			case PROCEDURE_STATEMENT_T:
+				return PROCEDURE_STATEMENT_N(node->node)->identifier->node->type->type;
+			case INTEGER_T:
+				return INTEGER_TYPE;
+			case EXPRESSION_T:
+				return typeof_expression(EXPRESSION_N(node->node));
+				break;
+			case FACTOR_T:
+				return typeof_factor(FACTOR_N(node->node));
+		}
+	}
+	return -1;
 }

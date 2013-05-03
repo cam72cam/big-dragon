@@ -88,7 +88,7 @@ typedef enum {
 #define PARAMETER_LIST_N(x)			x->type == PARAMETER_LIST_T			? ((parameter_list_t*)x->node)		: (tree_error(x, PARAMETER_LIST_T),		NULL)
 #define STATEMENT_LIST_N(x)			x->type == STATEMENT_LIST_T			? ((statement_list_t*)x->node)		: (tree_error(x, STATEMENT_LIST_T),		NULL)
 #define STATEMENT_N(x)				x->type == STATEMENT_T				? ((statement_t*)x->node)			: (tree_error(x, STATEMENT_T),			NULL)
-#define PROCEDURE_STATEMENT_N(x)	x->type == PROCEDURE_STATEMENT_T	? ((procedure_statement_t*)x->node)	: (tree_error(x, PROCEDURE_STATEMENT_T),NULL)
+#define PROCEDURE_STATEMENT_N(x)	((procedure_statement_t*) (x->type == PROCEDURE_STATEMENT_T	? x->node	: (tree_error(x, PROCEDURE_STATEMENT_T),NULL)))
 #define SUBPROGRAM_HEAD_N(x)		x->type == SUBPROGRAM_HEAD_T		? ((subprogram_head_t*)x->node)		: (tree_error(x, SUBPROGRAM_HEAD_T),	NULL)
 #define SUBPROGRAM_DECLARATION_N(x)	x->type == SUBPROGRAM_DECLARATION_T	? ((procedure_statement_t*)x->node)	: (tree_error(x, SUBPROGRAM_DECLARATION_T),NULL)
 #define SUBPROGRAM_DECLARATIONS_N(x)x->type == SUBPROGRAM_DECLARATIONS_T? ((procedure_statement_t*)x->node)	: (tree_error(x, SUBPROGRAM_DECLARATIONS_T),NULL)

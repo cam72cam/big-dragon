@@ -4,13 +4,13 @@
 
 tree_t	* make_mulop(char * type) {
 	mulop_t * node = malloc(sizeof(mulop_t));
-	       if(strcmp("*", type)) {
+	       if(0 == strcmp("*", type)) {
 		node->type = MULT;
-	} else if (strcmp("/", type) || strcmp("div", type)) {
+	} else if (0 == strcmp("/", type) || 0 == strcmp("div", type)) {
 		node->type = DIV;
-	} else if (strcmp("and", type)) {
+	} else if (0 == strcmp("and", type)) {
 		node->type = AND;
-	} else if (strcmp("mod", type)) {
+	} else if (0 == strcmp("mod", type)) {
 		node->type = MOD;
 	}
 	return make_tree(node, MULOP_T);
@@ -33,4 +33,17 @@ void	  print_mulop(mulop_t * node, int spaces) {
 			break;
 	}
 	fprintf(stderr, "\n");
+}
+
+int		  typeof_mulop(mulop_t* node) {
+	fprintf(stderr, "FOO:%d", node->type);
+	switch(node->type) {
+		case MULT:
+		case DIV:
+			return REAL_TYPE;
+		case AND:
+		case MOD:
+			return INTEGER_TYPE;
+	}
+	return -100;
 }

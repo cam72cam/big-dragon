@@ -14,5 +14,6 @@ typedef struct factor_s {
 
 tree_t* make_factor(tree_t * node);
 void	print_factor(factor_t * node, int spaces);
+int 	  typeof_factor(factor_t * node);
 
 #endif

@@ -18,5 +18,5 @@ typedef struct mulop_s {
 
 tree_t	* make_mulop(char * op);
 void	  print_mulop(mulop_t * node, int spaces);
-
+int		  typeof_mulop(mulop_t* node);
 #endif

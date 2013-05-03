@@ -17,3 +17,10 @@ void	  print_term(term_t * node, int spaces) {
 		print_mulop(node->op, spaces + SP_INDENT);
 	print_factor(node->right, spaces + SP_INDENT);
 }
+
+int 	  typeof_term(term_t * node) {
+	if(node->left  == NULL) {
+		return typeof_factor(node->right);
+	}
+	return typeof_mulop(node->op);
+}

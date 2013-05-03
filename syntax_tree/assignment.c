@@ -5,6 +5,8 @@ tree_t	* make_assignment(variable_t * variable, expression_t * expression) {
 	assignment_t	* node	= malloc(sizeof(assignment_t));
 	node->variable			= variable;
 	node->expression		= expression;
+	
+	node->variable->ident = find_identifier_with_type(node->variable->ident->node->ident, typeof_expression(node->expression));
 	return make_tree(node,  ASSIGNMENT_T);
 }
 

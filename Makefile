@@ -17,7 +17,7 @@ lex: bigd.l
 yacc: bigd.y
 	yacc -d -y bigd.y
 scope: scope.c scope.h
-	cc -c scope.c
+	cc -c $(CFLAGS) scope.c
 clean:
 	rm $(SYN_TREE_OBJ)
 	rm lex.yy.c y.tab.c y.tab.h scope.o bigd 

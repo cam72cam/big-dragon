@@ -81,7 +81,7 @@ declarations:
 	} 
 	| VAR identifier_list COLON type ENDSTMT declarations 
 	{
-		$$ = make_declarations(IDENTIFIER_LIST_N($2), TYPE_N($4), DECLARATIONS_N($6));
+		$$ = make_declarations(IDENTIFIER_LIST_N($2), TYPE_N($4), DECLARATIONS_N($6)); 
 		scope_add_declarations(DECLARATIONS_N($$));
 	}
 	;
@@ -262,7 +262,7 @@ simple_expression:
 	{
 		$$ = make_simple_expression(NULL,NULL,TERM_N($1));
 	}
-	| SIGN term
+	| SIGN term //TODO
 	{
 		$$ = make_simple_expression(NULL,ADDOP_N($1),TERM_N($2));
 	}

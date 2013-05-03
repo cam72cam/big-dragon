@@ -28,5 +28,6 @@ scope_t * current_scope;
 void 			add_scope(char * name);
 void			register_identifier(identifier_t * node, bool param);
 scope_ident_t 	* find_identifier(char * ident);
+scope_ident_t 	* find_identifier_with_type(char * ident, int type);
 void			print_scope();
 #endif

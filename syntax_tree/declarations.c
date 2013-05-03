@@ -6,6 +6,8 @@ tree_t	* make_declarations(identifier_list_t * vars, type_t * type, declarations
 	node->vars = vars;
 	node->type = type;
 	node->next = next;
+	
+	set_identifier_list_type(vars, type);
 	return make_tree(node, DECLARATIONS_T);
 }
 

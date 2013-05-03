@@ -26,27 +26,34 @@ void register_identifier(identifier_t * node, bool param) {
 	current_scope->length++;
 	//TODO DYNAMICALLY EXTEND
 }
-scope_ident_t * find_identifier(char * ident) {
+scope_ident_t * find_identifier_with_type(char * ident, int type) {
 	int i;
+	int tmp_type;
 	scope_t * curr;
 	char * str;
-	
-	subprogram_declaration_t 	* tmp_fn;
-	identifier_t 				* tmp_ident;
-	
 	for(curr = current_scope; curr != NULL; curr = curr->down) {
 		for(i = 0; i < curr->length; i++) {
 			str = curr->list[i].node->ident;
-			fprintf(stderr, "CURR IDENT %s %s\n", curr->name, str);
-			if(0 == strcmp(ident, str)) {
+			if(curr->list[i].node->type == NULL) {
+				tmp_type = 0;
+			} else {
+				tmp_type = curr->list[i].node->type->type;
+			}
+			fprintf(stderr, "CURR IDENT %s %s:%d\n", curr->name, str, tmp_type);
+			if(0 == strcmp(ident, str) && (type == tmp_type || type == -2)) {
 				//TODO MEMCPY
 				fprintf(stderr, "SCOPE: %s | %s = %s\n", curr->name, str, ident);
 				return &curr->list[i];
 			}
 		}
 	}
-	fprintf(stderr, "COULD NOT FIND IDENTIFIER %s\n", ident);
+	fprintf(stderr, "COULD NOT FIND IDENTIFIER %s OF TYPE %d\n", ident, type);
+	exit(-1);
 	return NULL;
+}
+
+scope_ident_t * find_identifier(char * ident) {
+	return find_identifier_with_type(ident, -2);
 }
 
 void print_scope() {

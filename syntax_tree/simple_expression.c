@@ -17,3 +17,10 @@ void	  print_simple_expression(simple_expression_t * node, int spaces) {
 		print_addop(node->op, spaces + SP_INDENT);
 	print_term(node->right, spaces + SP_INDENT);
 }
+
+int 	  typeof_simple_expression(simple_expression_t * node) {
+	if(node->left == NULL) {
+		return typeof_term(node->right);
+	}
+	return INTEGER_TYPE;
+}
