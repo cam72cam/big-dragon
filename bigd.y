@@ -49,8 +49,8 @@ program:
 	PROGRAM IDENTIFIER
 	{
 		identifier_t * ident = IDENTIFIER_N($2);
-		add_scope(ident->ident);
 		register_identifier(IDENTIFIER_N($2), false);
+		add_scope(ident->ident);
 	}
 	RPAREN identifier_list LPAREN ENDSTMT
 	declarations
@@ -122,8 +122,8 @@ subprogram_declaration:
 subprogram_head:
 	FUNCTION IDENTIFIER {
 		identifier_t * ident = IDENTIFIER_N($2);
-		add_scope(ident->ident);
 		register_identifier(IDENTIFIER_N($2), false);
+		add_scope(ident->ident);
 	} arguments COLON standard_type ENDSTMT 
 	{
 		$$ = make_subprogram_head(IDENTIFIER_N($2), PARAMETER_LIST_N($4), TYPE_N($6));
@@ -149,7 +149,7 @@ parameter_list:
 	| parameter_list ENDSTMT identifier_list COLON type
 	{
 		$$ = make_parameter_list(IDENTIFIER_LIST_N($3), TYPE_N($5), PARAMETER_LIST_N($1));
-		set_identifier_list_type(IDENTIFIER_LIST_N($1), TYPE_N($3));
+		set_identifier_list_type(IDENTIFIER_LIST_N($3), TYPE_N($5));
 		scope_add_parameter_list(PARAMETER_LIST_N($$));
 	}
 	;

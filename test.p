@@ -1,6 +1,6 @@
 program main( input, output );
 	var a, b, c: integer;
-	function gcd( a,b : integer ) : integer;
+	function gcd( a,b : real ) : integer;
 		var r: integer;
         begin
             if a < b then 
