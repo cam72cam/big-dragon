@@ -10,6 +10,11 @@ tree_t *make_identifier(char * ident) {
 }
 
 void   print_identifier(identifier_t * node, int spaces) {
-	print_spaces(spaces);
-	fprintf(stderr, "IDENT: %s\n", node->ident);
+	if(node != NULL) {
+		print_spaces(spaces);
+		fprintf(stderr, "IDENT: %s\n", node->ident);
+	} else {
+		print_spaces(spaces);
+		fprintf(stderr, "IDENT NOT FOUND!!!!");
+	}
 }

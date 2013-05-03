@@ -23,8 +23,8 @@ int yywrap()
 int main()
 {
 	add_scope("global");
-	register_identifier(make_identifier("read"));
-	register_identifier(make_identifier("writeln"));
+	register_identifier(IDENTIFIER_N(make_identifier("read")), false);
+	register_identifier(IDENTIFIER_N(make_identifier("writeln")), false);
 	
 	tree_t * tree = yyparse();
 	
@@ -50,7 +50,7 @@ program:
 	{
 		identifier_t * ident = IDENTIFIER_N($2);
 		add_scope(ident->ident);
-		register_identifier($2);
+		register_identifier(IDENTIFIER_N($2), false);
 	}
 	RPAREN identifier_list LPAREN ENDSTMT
 	declarations
@@ -123,7 +123,7 @@ subprogram_head:
 	FUNCTION IDENTIFIER {
 		identifier_t * ident = IDENTIFIER_N($2);
 		add_scope(ident->ident);
-		register_identifier($2);
+		register_identifier(IDENTIFIER_N($2), false);
 	} arguments COLON standard_type ENDSTMT 
 	{
 		$$ = make_subprogram_head(IDENTIFIER_N($2), PARAMETER_LIST_N($4), TYPE_N($6));
@@ -143,13 +143,13 @@ parameter_list:
 	identifier_list COLON type
 	{
 		$$ = make_parameter_list(IDENTIFIER_LIST_N($1), TYPE_N($3), NULL);
-//		set_identifier_list_type(IDENTIFIER_LIST_N($1), TYPE_N($3));
+		set_identifier_list_type(IDENTIFIER_LIST_N($1), TYPE_N($3));
 		scope_add_parameter_list(PARAMETER_LIST_N($$));
 	}
 	| parameter_list ENDSTMT identifier_list COLON type
 	{
 		$$ = make_parameter_list(IDENTIFIER_LIST_N($3), TYPE_N($5), PARAMETER_LIST_N($1));
-//		set_identifier_list_type(IDENTIFIER_LIST_N($1), TYPE_N($3));
+		set_identifier_list_type(IDENTIFIER_LIST_N($1), TYPE_N($3));
 		scope_add_parameter_list(PARAMETER_LIST_N($$));
 	}
 	;
@@ -232,11 +232,7 @@ variable:
 	}
 	;
 procedure_statement:
-	IDENTIFIER 
-	{
-		$$ = make_procedure_statement(IDENTIFIER_N($1), NULL);
-	}
-	| IDENTIFIER RPAREN expression_list LPAREN 
+	IDENTIFIER RPAREN expression_list LPAREN 
 	{
 		$$ = make_procedure_statement(IDENTIFIER_N($1), EXPRESSION_LIST_N($3));
 	}
@@ -286,9 +282,9 @@ term:
 	}
 	;
 factor:
-	IDENTIFIER RPAREN expression_list LPAREN
+	procedure_statement
 	{
-		$$ = make_factor(make_procedure_statement(IDENTIFIER_N($1), EXPRESSION_LIST_N($3)));
+		$$ = make_factor($1);
 	}
 	| IDENTIFIER
 	{

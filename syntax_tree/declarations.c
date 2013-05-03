@@ -13,7 +13,7 @@ void	  scope_add_declarations(declarations_t * list) {
 	identifier_list_t * idents;
 	if(list != NULL) {
 		for(idents = list->vars; idents != NULL; idents = idents->next) {
-			register_identifier(make_tree(idents->identifier, IDENTIFIER_T));
+			register_identifier(idents->identifier, false);
 		}
 		scope_add_declarations(list->next);
 	}

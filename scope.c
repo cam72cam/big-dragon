@@ -20,8 +20,9 @@ void add_scope(char * name) {
 	strcpy(current_scope->name, name);
 	current_scope->list = malloc(sizeof(scope_ident_t)*(current_scope->size +1));
 }
-void register_identifier(tree_t * node) {
+void register_identifier(identifier_t * node, bool param) {
 	current_scope->list[current_scope->length].node = node;
+	current_scope->list[current_scope->length].param = param;
 	current_scope->length++;
 	//TODO DYNAMICALLY EXTEND
 }
@@ -35,16 +36,7 @@ scope_ident_t * find_identifier(char * ident) {
 	
 	for(curr = current_scope; curr != NULL; curr = curr->down) {
 		for(i = 0; i < curr->length; i++) {
-			switch(curr->list[i].node->type) {
-				case SUBPROGRAM_DECLARATION_T:
-					tmp_fn = SUBPROGRAM_DECLARATION_N(curr->list[i].node);
-					str = tmp_fn->head->ident->ident;
-					break;
-				case IDENTIFIER_T:
-					tmp_ident = IDENTIFIER_N(curr->list[i].node);
-					str = tmp_ident->ident;
-					break;
-			}
+			str = curr->list[i].node->ident;
 			fprintf(stderr, "CURR IDENT %s %s\n", curr->name, str);
 			if(0 == strcmp(ident, str)) {
 				//TODO MEMCPY

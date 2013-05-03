@@ -4,9 +4,10 @@
 typedef struct procedure_statement_s procedure_statement_t;
 
 #include "tree.h"
+#include "../scope.h"
 
 typedef struct procedure_statement_s {
-	identifier_t		* identifier;
+	scope_ident_t		* identifier;
 	expression_list_t	* params;
 } procedure_statement_t;
 

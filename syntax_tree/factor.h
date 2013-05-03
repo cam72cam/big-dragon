@@ -4,9 +4,11 @@
 typedef struct factor_s factor_t;
 
 #include "tree.h"
+#include "../scope.h"
 
 typedef struct factor_s {
 	tree_t * node;
+	scope_ident_t * scoped_ident;
 	bool not;
 } factor_t;
 

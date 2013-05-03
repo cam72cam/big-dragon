@@ -8,7 +8,8 @@ typedef struct scope_ident_s scope_ident_t;
 
 typedef struct scope_ident_s {
 //	char * address;
-	tree_t * node;
+	bool param;
+	identifier_t * node;
 } scope_ident_t;
 
 
@@ -25,7 +26,7 @@ scope_t * top_scope;
 scope_t * current_scope;
 
 void 			add_scope(char * name);
-void			register_identifier(tree_t * node);
+void			register_identifier(identifier_t * node, bool param);
 scope_ident_t 	* find_identifier(char * ident);
 void			print_scope();
 #endif
