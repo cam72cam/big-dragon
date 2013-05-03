@@ -1,5 +1,6 @@
 %{
 #include "y.tab.h"
+#include "scope.h"
 #include "syntax_tree/tree.h"
 %}
 

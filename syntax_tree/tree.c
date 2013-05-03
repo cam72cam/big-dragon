@@ -20,8 +20,12 @@ void tree_error(tree_t * given, tree_types expected) {
 
 void print_spaces(int spaces){
 	int i;
-	for(i = 0; i < spaces; i++)
-		fprintf(stderr, " ");
+	for(i = 1; i <= spaces; i++)
+		if(i % 4 == 1)
+			fprintf(stderr, "|");
+		else
+			fprintf(stderr, " ");
+		
 }
 
 //From : http://stackoverflow.com/questions/3151779

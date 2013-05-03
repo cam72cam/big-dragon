@@ -7,7 +7,8 @@ typedef struct identifier_s identifier_t;
 #include "tree.h"
 
 typedef struct identifier_s {
-	char * ident;
+	char *	 ident;
+	type_t * type;
 } identifier_t;
 
 tree_t	* make_identifier(char * ident);

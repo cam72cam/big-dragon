@@ -6,8 +6,8 @@ SYNTAX_TREE		= $(SYN_TREE_SRC:%.c=syntax_tree/%)
 
 CFLAGS 	= -rdynamic -g -Wall
 
-main: lex yacc syn_tree
-	cc $(CFLAGS) $(SYN_TREE_OBJ) lex.yy.c y.tab.c -o bigd -DYYSTYPE=tree_t*
+main: lex yacc syn_tree scope
+	cc $(CFLAGS) $(SYN_TREE_OBJ) scope.o lex.yy.c y.tab.c -o bigd -DYYSTYPE=tree_t*
 
 syn_tree:
 	cd syntax_tree && cc -c $(CFLAGS) $(SYN_TREE_SRC)
@@ -16,7 +16,9 @@ lex: bigd.l
 	lex -d bigd.l
 yacc: bigd.y
 	yacc -d -y bigd.y
+scope: scope.c scope.h
+	cc -c scope.c
 clean:
 	rm $(SYN_TREE_OBJ)
-	rm lex.yy.c y.tab.c y.tab.h bigd  
+	rm lex.yy.c y.tab.c y.tab.h scope.o bigd 
 

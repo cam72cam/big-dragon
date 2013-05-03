@@ -6,6 +6,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "scope.h"
 #include "syntax_tree/tree.h"
 #define YYSTYPE tree_t*
 
@@ -21,7 +22,12 @@ int yywrap()
 
 int main()
 {
-	yyparse();
+	add_scope("global");
+	register_identifier(make_identifier("read"));
+	register_identifier(make_identifier("writeln"));
+	
+	tree_t * tree = yyparse();
+	
 	return 0;
 }
 
@@ -40,14 +46,18 @@ int main()
 %%
 
 program:
-	PROGRAM IDENTIFIER 
+	PROGRAM IDENTIFIER
+	{
+		identifier_t * ident = IDENTIFIER_N($2);
+		add_scope(ident->ident);
+	}
 	RPAREN identifier_list LPAREN ENDSTMT
 	declarations
 	subprogram_declarations
 	compound_statement
 	PERIOD 
 	{
-		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($4), DECLARATIONS_N($7), SUBPROGRAM_DECLARATIONS_N($8), STATEMENT_LIST_N($9));
+		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($5), DECLARATIONS_N($8), SUBPROGRAM_DECLARATIONS_N($9), STATEMENT_LIST_N($10));
 		print_program(PROGRAM_N($$), 4);
 	}
 	;
@@ -108,9 +118,12 @@ subprogram_declaration:
 	}
 	;
 subprogram_head:
-	FUNCTION IDENTIFIER arguments COLON standard_type ENDSTMT 
+	FUNCTION IDENTIFIER {
+		identifier_t * ident = IDENTIFIER_N($2);
+		add_scope(ident->ident);
+	} arguments COLON standard_type ENDSTMT 
 	{
-		$$ = make_subprogram_head(IDENTIFIER_N($2), PARAMETER_LIST_N($3), TYPE_N($5));
+		$$ = make_subprogram_head(IDENTIFIER_N($2), PARAMETER_LIST_N($4), TYPE_N($6));
 	}
 	;
 arguments:
@@ -126,12 +139,15 @@ arguments:
 parameter_list:
 	identifier_list COLON type
 	{
-		print_identifier_list(IDENTIFIER_LIST_N($1), 0);
 		$$ = make_parameter_list(IDENTIFIER_LIST_N($1), TYPE_N($3), NULL);
+//		set_identifier_list_type(IDENTIFIER_LIST_N($1), TYPE_N($3));
+		scope_add_parameter_list(PARAMETER_LIST_N($$));
 	}
 	| parameter_list ENDSTMT identifier_list COLON type
 	{
 		$$ = make_parameter_list(IDENTIFIER_LIST_N($3), TYPE_N($5), PARAMETER_LIST_N($1));
+//		set_identifier_list_type(IDENTIFIER_LIST_N($1), TYPE_N($3));
+		scope_add_parameter_list(PARAMETER_LIST_N($$));
 	}
 	;
 compound_statement: //statement_list
@@ -216,10 +232,14 @@ procedure_statement:
 	IDENTIFIER 
 	{
 		$$ = make_procedure_statement(IDENTIFIER_N($1), NULL);
+		identifier_t * node = IDENTIFIER_N($1);
+		find_identifier(node->ident);
 	}
 	| IDENTIFIER RPAREN expression_list LPAREN 
 	{
 		$$ = make_procedure_statement(IDENTIFIER_N($1), EXPRESSION_LIST_N($3));
+		identifier_t * node = IDENTIFIER_N($1);
+		find_identifier(node->ident);
 	}
 	;
 expression_list:

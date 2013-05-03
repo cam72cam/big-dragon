@@ -13,5 +13,9 @@ void   print_identifier_list(identifier_list_t * node, int spaces) {
 	fprintf(stderr, "IDENT_LIST:\n");
 	for(; node != NULL; node = node->next)
 		print_identifier(node->identifier, spaces + SP_INDENT);
-	
+}
+
+void   set_identifier_list_type(identifier_list_t * node, type_t * t) {
+	for(; node != NULL; node = node->next)
+		node->identifier->type = t;
 }
