@@ -50,6 +50,7 @@ program:
 	{
 		identifier_t * ident = IDENTIFIER_N($2);
 		add_scope(ident->ident);
+		register_identifier($2);
 	}
 	RPAREN identifier_list LPAREN ENDSTMT
 	declarations
@@ -81,6 +82,7 @@ declarations:
 	| VAR identifier_list COLON type ENDSTMT declarations 
 	{
 		$$ = make_declarations(IDENTIFIER_LIST_N($2), TYPE_N($4), DECLARATIONS_N($6));
+		scope_add_declarations(DECLARATIONS_N($$));
 	}
 	;
 type:
@@ -121,6 +123,7 @@ subprogram_head:
 	FUNCTION IDENTIFIER {
 		identifier_t * ident = IDENTIFIER_N($2);
 		add_scope(ident->ident);
+		register_identifier($2);
 	} arguments COLON standard_type ENDSTMT 
 	{
 		$$ = make_subprogram_head(IDENTIFIER_N($2), PARAMETER_LIST_N($4), TYPE_N($6));
@@ -232,14 +235,10 @@ procedure_statement:
 	IDENTIFIER 
 	{
 		$$ = make_procedure_statement(IDENTIFIER_N($1), NULL);
-		identifier_t * node = IDENTIFIER_N($1);
-		find_identifier(node->ident);
 	}
 	| IDENTIFIER RPAREN expression_list LPAREN 
 	{
 		$$ = make_procedure_statement(IDENTIFIER_N($1), EXPRESSION_LIST_N($3));
-		identifier_t * node = IDENTIFIER_N($1);
-		find_identifier(node->ident);
 	}
 	;
 expression_list:

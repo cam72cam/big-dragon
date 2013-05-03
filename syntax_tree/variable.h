@@ -4,9 +4,10 @@
 typedef struct variable_s variable_t;
 
 #include "tree.h"
+#include "../scope.h"
 
 typedef struct variable_s {
-	identifier_t		* ident;
+	scope_ident_t	* ident;
 	expression_t	* expression;
 } variable_t;
 

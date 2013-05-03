@@ -45,7 +45,7 @@ scope_ident_t * find_identifier(char * ident) {
 					str = tmp_ident->ident;
 					break;
 			}
-			fprintf(stderr, "CURR IDENT %s\n", str);
+			fprintf(stderr, "CURR IDENT %s %s\n", curr->name, str);
 			if(0 == strcmp(ident, str)) {
 				//TODO MEMCPY
 				fprintf(stderr, "SCOPE: %s | %s = %s\n", curr->name, str, ident);
@@ -53,6 +53,7 @@ scope_ident_t * find_identifier(char * ident) {
 			}
 		}
 	}
+	fprintf(stderr, "COULD NOT FIND IDENTIFIER %s\n", ident);
 	return NULL;
 }
 

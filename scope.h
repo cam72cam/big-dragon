@@ -2,6 +2,7 @@
 #define SCOPE_H
 
 typedef struct scope_s scope_t;
+typedef struct scope_ident_s scope_ident_t;
 
 #include "syntax_tree/tree.h"
 
