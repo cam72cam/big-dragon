@@ -26,7 +26,7 @@ int main()
 	register_identifier(IDENTIFIER_N(make_identifier("read")), false);
 	register_identifier(IDENTIFIER_N(make_identifier("writeln")), false);
 	
-	tree_t * tree = yyparse();
+	yyparse();
 	
 	return 0;
 }
