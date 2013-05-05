@@ -4,15 +4,19 @@
 }
 
 %{
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "scope.h"
 #include "syntax_tree/tree.h"
 #define YYSTYPE tree_t*
 
+extern line_number;
+
 void yyerror(const char *str)
 {
-        fprintf(stderr,"error: %s\n",str);
+        fprintf(stderr, "Error at line %d: %s\n", line_number ,str);
+        exit(-1);
 }
  
 int yywrap()
@@ -22,10 +26,20 @@ int yywrap()
 
 int main()
 {
-	add_scope("global");
-	register_identifier(IDENTIFIER_N(make_identifier("read")), false);
-	register_identifier(IDENTIFIER_N(make_identifier("writeln")), false);
-	
+	line_number = 0;
+
+	identifier_t * tmp;
+	push_scope("global");
+	push_scope("read");
+		tmp = IDENTIFIER_N(make_identifier("variable"));
+		tmp->type = TYPE_N(make_type(INTEGER_TYPE));
+		register_identifier(tmp, true);
+	pop_scope();
+	push_scope("writeln");
+		tmp = IDENTIFIER_N(make_identifier("variable"));
+		tmp->type = TYPE_N(make_type(INTEGER_TYPE));
+		register_identifier(tmp, true);
+	pop_scope();
 	yyparse();
 	
 	return 0;
@@ -49,8 +63,7 @@ program:
 	PROGRAM IDENTIFIER
 	{
 		identifier_t * ident = IDENTIFIER_N($2);
-		register_identifier(IDENTIFIER_N($2), false);
-		add_scope(ident->ident);
+		push_scope(ident->ident);
 	}
 	RPAREN identifier_list LPAREN ENDSTMT
 	declarations
@@ -60,6 +73,7 @@ program:
 	{
 		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($5), DECLARATIONS_N($8), SUBPROGRAM_DECLARATIONS_N($9), STATEMENT_LIST_N($10));
 		print_program(PROGRAM_N($$), 4);
+		pop_scope();
 	}
 	;
 
@@ -111,6 +125,7 @@ subprogram_declarations:
 	| subprogram_declarations subprogram_declaration ENDSTMT 
 	{
 		$$ = make_subprogram_declarations(SUBPROGRAM_DECLARATION_N($2), SUBPROGRAM_DECLARATIONS_N($1));
+		pop_scope();
 	}
 	;
 subprogram_declaration:
@@ -121,9 +136,7 @@ subprogram_declaration:
 	;
 subprogram_head:
 	FUNCTION IDENTIFIER {
-		identifier_t * ident = IDENTIFIER_N($2);
-		register_identifier(IDENTIFIER_N($2), false);
-		add_scope(ident->ident);
+		push_scope(IDENTIFIER_N($2)->ident);
 	} arguments COLON standard_type ENDSTMT 
 	{
 		$$ = make_subprogram_head(IDENTIFIER_N($2), PARAMETER_LIST_N($4), TYPE_N($6));
@@ -182,7 +195,6 @@ statement_list:
 statement:
 	variable ASSIGNOP expression 
 	{
-		
 		$$ = make_statement(make_assignment(VARIABLE_N($1), EXPRESSION_N($3)));
 	}
 	| procedure_statement 

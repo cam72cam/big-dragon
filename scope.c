@@ -2,17 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-void add_scope(char * name) {
+void push_scope(char * name) {
+	fprintf(stderr, "PUSH %s\n", name);
+	scope_t * tmp;
 	if(top_scope == NULL) {
 		top_scope = malloc(sizeof(scope_t));
-		top_scope->up = NULL;
 		top_scope->down = NULL;
 		current_scope = top_scope;
 	} else {
-		current_scope->up = malloc(sizeof(scope_t));
-		current_scope->up->down = current_scope;
-		current_scope = current_scope->up;
-		current_scope->up = NULL;
+		register_identifier(IDENTIFIER_N(make_identifier(name)), false);
+		tmp = current_scope;
+		current_scope = malloc(sizeof(scope_t));
+		current_scope->down = tmp;
+		find_identifier(name)->scope = current_scope;
 	}
 	current_scope->size = 200;
 	current_scope->length = 0;
@@ -20,6 +22,12 @@ void add_scope(char * name) {
 	strcpy(current_scope->name, name);
 	current_scope->list = malloc(sizeof(scope_ident_t)*(current_scope->size +1));
 }
+
+void pop_scope() {
+	fprintf(stderr, "POP %s\n", current_scope->name);
+	current_scope = current_scope->down;
+}
+
 void register_identifier(identifier_t * node, bool param) {
 	current_scope->list[current_scope->length].node = node;
 	current_scope->list[current_scope->length].param = param;
@@ -39,21 +47,33 @@ scope_ident_t * find_identifier_with_type(char * ident, int type) {
 			} else {
 				tmp_type = curr->list[i].node->type->type;
 			}
-			fprintf(stderr, "CURR IDENT %s %s:%d\n", curr->name, str, tmp_type);
 			if(0 == strcmp(ident, str) && (type == tmp_type || type == -2)) {
-				//TODO MEMCPY
-				fprintf(stderr, "SCOPE: %s | %s = %s\n", curr->name, str, ident);
 				return &curr->list[i];
 			}
 		}
 	}
-	fprintf(stderr, "COULD NOT FIND IDENTIFIER %s OF TYPE %d\n", ident, type);
-	exit(-1);
+	str = malloc(sizeof(char) * 1000);
+	sprintf(str, "identifier %s of type %d does not exist\n", ident, type);
+	yyerror(str);
 	return NULL;
 }
 
 scope_ident_t * find_identifier(char * ident) {
 	return find_identifier_with_type(ident, -2);
+}
+
+int	scope_parameters_length(scope_t * scope) {
+	int res = 0;
+	int i;
+	if(scope != NULL) {
+		for(i = 0; i < scope->length; i++) {
+			if(scope->list[i].param)
+				res++;
+		}
+		return res;
+	} else {
+		return -1;
+	}
 }
 
 void print_scope() {

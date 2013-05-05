@@ -35,8 +35,7 @@ void	  print_mulop(mulop_t * node, int spaces) {
 	fprintf(stderr, "\n");
 }
 
-int		  typeof_mulop(mulop_t* node) {
-	fprintf(stderr, "FOO:%d", node->type);
+int typeof_mulop(mulop_t* node) {
 	switch(node->type) {
 		case MULT:
 		case DIV:

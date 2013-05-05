@@ -2,6 +2,8 @@
 #include "y.tab.h"
 #include "scope.h"
 #include "syntax_tree/tree.h"
+
+int line_number;
 %}
 
 
@@ -88,7 +90,7 @@ real			return REAL_TYPE;
 		}
 
 
-[\n]			/* ignore end of line */;
+[\n]			{line_number++;}/* ignore end of line */;
 [ \t]+			/* ignore whitespace */;
 %%
 

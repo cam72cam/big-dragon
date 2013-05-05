@@ -7,7 +7,7 @@ tree_t	* make_subprogram_head(identifier_t * ident, parameter_list_t * params, t
 	node->params				= params;
 	node->type					= type;
 	
-	node->ident->type = type;
+	find_identifier(node->ident->ident)->node->type = type;
 	return make_tree(node,  SUBPROGRAM_HEAD_T);
 }
 

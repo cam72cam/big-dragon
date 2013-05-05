@@ -8,6 +8,10 @@ tree_t * make_expression_list(expression_t * ident, expression_list_t * next) {
 	return make_tree(node, EXPRESSION_LIST_T);
 }
 
+int expression_list_length(expression_list_t * node) {
+	return (node == NULL ? 0 : 1 + expression_list_length(node->next));
+}
+
 void   print_expression_list(expression_list_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "EXPR_LIST:\n");
