@@ -12,5 +12,5 @@ typedef struct type_s {
 
 tree_t	* make_type(int type);
 void	  print_type(type_t * node, int spaces);
-
+char 	* type_to_string(int type);
 #endif

@@ -51,7 +51,7 @@ scope_ident_t * find_identifier_with_type(char * ident, int type) {
 		}
 	}
 	str = malloc(sizeof(char) * 1000);
-	sprintf(str, "identifier %s of type %d does not exist\n", ident, type);
+	sprintf(str, "identifier %s of type %s does not exist\n", ident, type_to_string(type));
 	yyerror(str);
 	return NULL;
 }

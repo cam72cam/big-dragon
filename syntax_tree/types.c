@@ -17,3 +17,14 @@ void	  print_type(type_t * node, int spaces) {
 			break;
 	}
 }
+
+char 	* type_to_string(int type) {
+	switch(type) {
+		case INTEGER_TYPE:
+			return "integer";
+		case REAL_TYPE:
+			return "real";
+		default:
+			return "unknown";
+	}
+}
