@@ -38,7 +38,10 @@ char * gencode_procedure_statement(procedure_statement_t * node) {
 	i = 0;
 	for(expr = node->params; expr != NULL && expr->expression != NULL; expr = expr->next) {
 		str = gencode_expression(expr->expression);
-		fprintf(stderr, "movl %s, %d(%%esp)\n", str, 4*i);
+		fprintf(stderr, "push %%eax\n");
+		fprintf(stderr, "movl %s, %%eax\n", str);
+		fprintf(stderr, "movl %%eax, %d(%%esp)\n", 4*i);
+		fprintf(stderr, "pop %%eax\n");
 		i++;
 	}
 	fprintf(stderr, "call %s\n", node->identifier->node->ident);

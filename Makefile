@@ -5,6 +5,7 @@ SYN_TREE_OBJ	= $(SYN_TREE_SRC:%.c=syntax_tree/%.o)
 SYNTAX_TREE		= $(SYN_TREE_SRC:%.c=syntax_tree/%)
 
 CFLAGS 	= -rdynamic -g -lm
+YFLAGS	= -d -y
 
 main: lex yacc syn_tree scope
 	cc $(CFLAGS) $(SYN_TREE_OBJ) scope.o lex.yy.c y.tab.c -o bigd -DYYSTYPE=tree_t*
@@ -15,10 +16,16 @@ syn_tree:
 lex: bigd.l
 	lex bigd.l
 yacc: bigd.y
-	yacc -d -y bigd.y
+	yacc $(YFLAGS) bigd.y
 scope: scope.c scope.h
 	cc -c $(CFLAGS) scope.c
+	
+test: main test.p
+	./bigd test.p 2>./test.s
+	cc -g -m32 test.s -o test
+
 clean:
 	rm $(SYN_TREE_OBJ)
-	rm lex.yy.c y.tab.c y.tab.h scope.o bigd 
+	rm lex.yy.c y.tab.c y.tab.h scope.o bigd
+	rm test.s test
 

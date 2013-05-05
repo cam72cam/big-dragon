@@ -9,6 +9,8 @@
 #include <string.h>
 #include "scope.h"
 #include "syntax_tree/tree.h"
+#include <stdio.h>
+extern FILE* yyin;
 #define YYSTYPE tree_t*
 
 extern line_number;
@@ -24,8 +26,28 @@ int yywrap()
         return 1;
 }
 
-int main()
+tree_t * main_fn;
+
+int main(int argc, char ** argv)
 {
+
+	 if(argc >= 2)
+     {
+         yyin = fopen(argv[1], "r");
+         if(!yyin)
+         {
+             fprintf(stderr, "can't read file %s\n", argv[1]);
+             return 1;
+         }
+     }
+
+
+	fprintf(stderr, ".text\n");
+    fprintf(stderr, ".align 4\n");
+    fprintf(stderr, ".globl main\n");
+
+
+
 	line_number = 1;
 
 	identifier_t * tmp;
@@ -41,6 +63,15 @@ int main()
 		register_identifier(tmp, true);
 	pop_scope();
 	yyparse();
+	
+	
+	fprintf(stderr, "writeln:\n");
+	fprintf(stderr, "ret\n");
+	fprintf(stderr, "read:\n");
+	fprintf(stderr, "ret\n");
+	if(argc == 3 && 0 == strcmp("--tree", argv[2])) {
+		print_program(PROGRAM_N(main_fn), 4);
+	}
 	
 	return 0;
 }
@@ -72,8 +103,15 @@ program:
 	PERIOD 
 	{
 		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($5), DECLARATIONS_N($8), SUBPROGRAM_DECLARATIONS_N($9), STATEMENT_LIST_N($10));
-		//print_program(PROGRAM_N($$), 4);
+		main_fn = $$;
 		gencode_program(PROGRAM_N($$));
+		
+	
+		if(find_identifier("main") == NULL) {
+			fprintf(stderr, "main:\n");
+			fprintf(stderr, "call %s", IDENTIFIER_N($2)->ident);
+			fprintf(stderr, "ret\n");
+		}
 	}
 	;
 

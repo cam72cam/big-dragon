@@ -37,5 +37,5 @@ int		  declarations_length(declarations_t * node) {
 
 void	  gencode_declarations(declarations_t * node) {
 	fprintf(stderr, "movl %%esp, %%ebp\n");
-	fprintf(stderr, "subl %d, %%esp\n", declarations_length(node) * 4);
+	fprintf(stderr, "subl $0x%x, %%esp\n", declarations_length(node) * 4);
 }

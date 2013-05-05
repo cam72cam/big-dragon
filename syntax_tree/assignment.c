@@ -20,6 +20,10 @@ void   print_assignment(assignment_t * node, int spaces) {
 
 void gencode_assignment(assignment_t * node) {
 	char * tmp = gencode_expression(node->expression);
-//	esp_to_ebp(tmp); //if we are assigning to a parameter, we know it is in ebp
-	fprintf(stderr, "movl %s, %s\n", tmp, node->variable->ident->address);
+	
+	fprintf(stderr, "push %%eax\n");
+	fprintf(stderr, "movl %s, %%eax\n", tmp);
+	fprintf(stderr, "movl %%eax, %s\n", node->variable->ident->address);
+	
+	fprintf(stderr, "pop %%eax\n");
 }

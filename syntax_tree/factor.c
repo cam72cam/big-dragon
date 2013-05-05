@@ -82,7 +82,7 @@ char *	gencode_factor(factor_t * node) {
 					fprintf(stderr, "movl $1, %s\n", tmp);
 					fprintf(stderr, "jne .ft%d\n", lc); // if was true, set false;
 					fprintf(stderr, "movl $0, %s\n", tmp);
-					fprintf(stderr, ".ft%d\n", lc);
+					fprintf(stderr, ".ft%d:\n", lc);
 					return tmp;
 				}
 				break;

@@ -29,13 +29,13 @@ void gencode_if(if_t * node) {
 	fprintf(stderr, "je .ifeq%d\n", tmp);
 	fprintf(stderr, "jne .ifneq%d\n", tmp);
 	
-	fprintf(stderr, ".ifeq%d\n", tmp);
+	fprintf(stderr, ".ifeq%d:\n", tmp);
 	gencode_statement(node->statement);
 	fprintf(stderr, "jmp .ifend%d\n", tmp);
 	
-	fprintf(stderr, ".ifneq%d\n", tmp);
+	fprintf(stderr, ".ifneq%d:\n", tmp);
 	gencode_else(node->elsey);
 	fprintf(stderr, "jmp .ifend%d\n", tmp);
 	
-	fprintf(stderr, ".ifend%d\n", tmp);
+	fprintf(stderr, ".ifend%d:\n", tmp);
 }

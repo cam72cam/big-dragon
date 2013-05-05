@@ -57,28 +57,28 @@ char * gencode_relop(relop_t * node, char * left, char * right) {
 			fprintf(stderr, "jne .over%d\n", counter);
 			break;
 		case LT:
-			fprintf(stderr, "jlt .over%d\n", counter);
+			fprintf(stderr, "jl .over%d\n", counter);
 			break;
 		case GT:
-			fprintf(stderr, "jgt .over%d\n", counter);
+			fprintf(stderr, "jg .over%d\n", counter);
 			break;
 		case LT_EQ:
 			fprintf(stderr, "je .over%d\n", counter);
-			fprintf(stderr, "jlt .over%d\n", counter);
+			fprintf(stderr, "jl .over%d\n", counter);
 			break;
 		case GT_EQ:
 			fprintf(stderr, "je .over%d\n", counter);
-			fprintf(stderr, "jgt .over%d\n", counter);
+			fprintf(stderr, "jg .over%d\n", counter);
 			break;
 	}
 	
-	fprintf(stderr, "mov $0 %%eax\n");
+	fprintf(stderr, "movl $0, %%eax\n");
 	fprintf(stderr, "jmp .done%d\n", counter);
 	
-	fprintf(stderr, ".over%d\n", counter);
-	fprintf(stderr, "mov $1 %%eax\n");
+	fprintf(stderr, ".over%d:\n", counter);
+	fprintf(stderr, "movl $1, %%eax\n");
 		
-	fprintf(stderr, ".done%d\n", counter);
+	fprintf(stderr, ".done%d:\n", counter);
 	counter ++;
 	return "%eax";
 }

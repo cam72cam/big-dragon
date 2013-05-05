@@ -57,10 +57,10 @@ char  	* gencode_mulop(mulop_t * node, char * left, char * right) {
 		case DIV:
 			fprintf(stderr, "push %%edx\n");
 			fprintf(stderr, "push %%eax\n");
-			fprintf(stderr, "xor %%edx, %%edx\n");
-			fprintf(stderr, "mov %s, %%eax\n", left);
+			fprintf(stderr, "xorl %%edx, %%edx\n");
+			fprintf(stderr, "movl %s, %%eax\n", left);
 			fprintf(stderr, "idivl %s\n", right); //eax is value
-			fprintf(stderr, "mov %%eax, %s\n", right);
+			fprintf(stderr, "movl %%eax, %s\n", right);
 			fprintf(stderr, "pop %%eax\n");
 			fprintf(stderr, "pop %%edx\n");
 			break;
@@ -70,10 +70,10 @@ char  	* gencode_mulop(mulop_t * node, char * left, char * right) {
 		case MOD:
 			fprintf(stderr, "push %%edx\n");
 			fprintf(stderr, "push %%eax\n");
-			fprintf(stderr, "xor %%edx %%edx\n");
-			fprintf(stderr, "mov %s %%eax\n", left);
+			fprintf(stderr, "xorl %%edx, %%edx\n");
+			fprintf(stderr, "movl %s, %%eax\n", left);
 			fprintf(stderr, "idivl %s\n", right);
-			fprintf(stderr, "mov %%edx, \n", right); //edx is remainder
+			fprintf(stderr, "movl %%edx, %s\n", right); //edx is remainder
 			fprintf(stderr, "pop %%eax\n");
 			fprintf(stderr, "pop %%edx\n");
 			break;

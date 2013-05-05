@@ -21,7 +21,7 @@ void gencode_while(while_t * node) {
 	int lcnt = cnt;
 	cnt++;
 	char * tmp;
-	fprintf(stderr, ".while%d\n", lcnt);
+	fprintf(stderr, ".while%d:\n", lcnt);
 	
 	gencode_statement(node->statement);
 	
