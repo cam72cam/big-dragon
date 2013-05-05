@@ -14,5 +14,6 @@ typedef struct expression_s {
 tree_t	* make_expression(simple_expression_t * left, relop_t * op, simple_expression_t * right);
 void	  print_expression(expression_t * node, int spaces);
 int		  typeof_expression(expression_t * node);
+char	* gencode_expression(expression_t * node);
 
 #endif

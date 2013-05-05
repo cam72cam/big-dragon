@@ -11,5 +11,5 @@ typedef struct else_s {
 
 tree_t * make_else(tree_t * node);
 void	 print_else(else_t * node, int spaces);
-
+void	  gencode_else(else_t * node);
 #endif

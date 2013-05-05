@@ -18,3 +18,7 @@ void   print_subprogram_head(subprogram_head_t * node, int spaces) {
 	print_parameter_list(node->params, spaces + SP_INDENT);
 	print_type(node->type, spaces + SP_INDENT);
 }
+
+void	gencode_subprogram_head(subprogram_head_t * node) {
+	fprintf(stderr, "%s:\n", node->ident->ident);
+}

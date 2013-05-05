@@ -44,3 +44,41 @@ void	  print_relop(relop_t * node, int spaces) {
 	}
 	fprintf(stderr, "\n");
 }
+
+char * gencode_relop(relop_t * node, char * left, char * right) {
+	static int counter = 0;
+	fprintf(stderr, "cmpl %s, %s\n", left, right);
+	
+	switch(node->type) {
+		case EQ:
+			fprintf(stderr, "je .over%d\n", counter);
+			break;
+		case NE:
+			fprintf(stderr, "jne .over%d\n", counter);
+			break;
+		case LT:
+			fprintf(stderr, "jlt .over%d\n", counter);
+			break;
+		case GT:
+			fprintf(stderr, "jgt .over%d\n", counter);
+			break;
+		case LT_EQ:
+			fprintf(stderr, "je .over%d\n", counter);
+			fprintf(stderr, "jlt .over%d\n", counter);
+			break;
+		case GT_EQ:
+			fprintf(stderr, "je .over%d\n", counter);
+			fprintf(stderr, "jgt .over%d\n", counter);
+			break;
+	}
+	
+	fprintf(stderr, "mov $0 %%eax\n");
+	fprintf(stderr, "jmp .done%d\n", counter);
+	
+	fprintf(stderr, ".over%d\n", counter);
+	fprintf(stderr, "mov $1 %%eax\n");
+		
+	fprintf(stderr, ".done%d\n", counter);
+	counter ++;
+	return "%eax";
+}

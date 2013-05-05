@@ -11,5 +11,5 @@ typedef struct statement_s {
 
 tree_t* make_statement(tree_t * node);
 void	print_statement(statement_t * node, int spaces);
-
+void	gencode_statement(statement_t * statement);
 #endif

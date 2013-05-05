@@ -26,3 +26,21 @@ void   print_procedure_statement(procedure_statement_t * node, int spaces) {
 	print_identifier(node->identifier->node, spaces + SP_INDENT);
 	print_expression_list(node->params, spaces + SP_INDENT);
 }
+
+char * gencode_procedure_statement(procedure_statement_t * node) {
+	int i;
+	int param_num;
+	char * str;
+	expression_list_t * expr;
+	
+	param_num = scope_parameters_length(node->identifier->scope);
+//	for(i = 0; i < param_num; i++) {
+	i = 0;
+	for(expr = node->params; expr != NULL && expr->expression != NULL; expr = expr->next) {
+		str = gencode_expression(expr->expression);
+		fprintf(stderr, "movl %s, %d(%%esp)\n", str, 4*i);
+		i++;
+	}
+	fprintf(stderr, "call %s\n", node->identifier->node->ident);
+	return "%eax";
+}

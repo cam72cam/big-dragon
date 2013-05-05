@@ -14,4 +14,5 @@ typedef struct declarations_s {
 tree_t	* make_declarations(identifier_list_t * vars, type_t * type, declarations_t * next);
 void	  scope_add_declarations(declarations_t * list);
 void	  print_declarations(declarations_t * node, int spaces);
+void	  gencode_declarations(declarations_t * node);
 #endif

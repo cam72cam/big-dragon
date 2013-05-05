@@ -25,3 +25,23 @@ void	print_statement(statement_t * node, int spaces) {
 			break;
 	}
 }
+
+void	gencode_statement(statement_t * node) {
+	switch(node->node->type) {
+		case ASSIGNMENT_T:
+			gencode_assignment(ASSIGNMENT_N(node->node));
+			break;
+		case PROCEDURE_STATEMENT_T:
+			gencode_procedure_statement(PROCEDURE_STATEMENT_N(node->node));
+			break;
+		case STATEMENT_LIST_T:
+			gencode_statement_list(STATEMENT_LIST_N(node->node));
+			break;
+		case IF_T:
+			gencode_if(IF_N(node->node));
+			break;
+		case WHILE_T:
+//			gencode_while(WHILE_N(node->node));
+			break;
+	}
+}

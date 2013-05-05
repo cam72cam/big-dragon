@@ -22,5 +22,27 @@ int		 typeof_expression(expression_t * node) {
 	if(node->right == NULL) {
 		return typeof_simple_expression(node->left);
 	}
-	return INTEGER_TYPE;
+	return -100; // breaks if not part of if
+}
+
+
+char	* gencode_expression(expression_t * node) {
+	char * right;
+	char * left;
+	char * res;
+	if(node->right == NULL) {
+		return gencode_simple_expression(node->left);
+	}
+	fprintf(stderr, "push %%ebx\n");
+	fprintf(stderr, "push %%ecx\n");
+	right = gencode_simple_expression(node->right);
+	fprintf(stderr, "movl %s %%ebx\n", right);
+	left = gencode_simple_expression(node->left);
+	fprintf(stderr, "movl %s %%ecx\n", left);
+	
+	res = gencode_relop(node->op, "%ebx", "%ecx");
+	
+	fprintf(stderr, "pop %%ecx\n");
+	fprintf(stderr, "pop %%ebx\n");
+	return res;
 }

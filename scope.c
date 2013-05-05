@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+int pc;
+int lc;
+
 void push_scope(char * name) {
 	scope_t * tmp;
 	if(top_scope == NULL) {
@@ -20,6 +23,8 @@ void push_scope(char * name) {
 	current_scope->name = malloc(sizeof(char) * (strlen(name)  +1));
 	strcpy(current_scope->name, name);
 	current_scope->list = malloc(sizeof(scope_ident_t)*(current_scope->size +1));
+	pc=0;
+	lc=-4;
 }
 
 void pop_scope() {
@@ -29,6 +34,15 @@ void pop_scope() {
 void register_identifier(identifier_t * node, bool param) {
 	current_scope->list[current_scope->length].node = node;
 	current_scope->list[current_scope->length].param = param;
+	if(param) {
+		current_scope->list[current_scope->length].address = malloc(sizeof(char) * 10);
+		sprintf(current_scope->list[current_scope->length].address, "%d(%%esp)", pc);
+		pc+=4;
+	} else {
+		current_scope->list[current_scope->length].address = malloc(sizeof(char) * 10);
+		sprintf(current_scope->list[current_scope->length].address, "%d(%%esp)", lc);
+		lc-=4;
+	}
 	current_scope->length++;
 	//TODO DYNAMICALLY EXTEND
 }

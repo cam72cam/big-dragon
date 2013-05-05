@@ -17,5 +17,6 @@ typedef struct addop_s {
 
 tree_t	* make_addop(char * op);
 void	  print_addop(addop_t * node, int spaces);
+char * gencode_addop(addop_t * node, char * left, char * right);
 
 #endif

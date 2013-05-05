@@ -28,3 +28,17 @@ void	print_addop(addop_t * node, int spaces) {
 			break;
 	}
 }
+
+char * gencode_addop(addop_t * node, char * left, char * right) {
+	switch(node->type) {
+		case PLUS:
+			fprintf(stderr, "addl %s, %s\n", left, right);
+			break;
+		case MINUS:
+			fprintf(stderr, "subl %s, %s\n", left, right);
+			break;
+		case OR:
+			fprintf(stderr, "or %s, %s\n", left, right);
+			break;
+	}
+}

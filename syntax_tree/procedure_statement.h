@@ -13,4 +13,5 @@ typedef struct procedure_statement_s {
 
 tree_t	* make_procedure_statement(identifier_t * ident, expression_list_t * params);
 void	  print_procedure_statement(procedure_statement_t * node, int spaces);
+char * 	gencode_procedure_statement(procedure_statement_t * node);
 #endif

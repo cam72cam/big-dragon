@@ -11,4 +11,5 @@ typedef struct integer_s {
 
 tree_t	* make_integer(int value);
 void	  print_integer(integer_t * node, int spaces);
+char	* gencode_integer(integer_t * node);
 #endif

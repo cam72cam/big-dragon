@@ -131,6 +131,7 @@ subprogram_declaration:
 	subprogram_head declarations compound_statement 
 	{
 		$$ = make_subprogram_declaration(SUBPROGRAM_HEAD_N($1), DECLARATIONS_N($2), STATEMENT_LIST_N($3));
+		gencode_subprogram_declaration(SUBPROGRAM_DECLARATION_N($$));
 		pop_scope();
 	}
 	;

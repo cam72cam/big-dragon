@@ -32,3 +32,22 @@ int 	  typeof_term(term_t * node) {
 	}
 	return  INTEGER_TYPE;
 }
+char * gencode_term(term_t * node) {
+	char * right;
+	char * left;
+	char * result;
+	
+	if(node->left == NULL) {
+		return gencode_factor(node->right);
+	}
+	fprintf(stderr, "push %%ebx\n");
+	fprintf(stderr, "push %%ecx\n");
+	right = gencode_factor(node->right);
+	fprintf(stderr, "movl %s %%ebx\n", right);
+	left = gencode_term(node->left);
+	fprintf(stderr, "movl %s %%ecx\n", left);
+	fprintf(stderr, "test %%ebx, %%ecx\n");
+	fprintf(stderr, "pop %%ecx\n");
+	fprintf(stderr, "pop %%ebx\n");
+	return "";
+}

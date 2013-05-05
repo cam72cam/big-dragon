@@ -16,3 +16,16 @@ void   print_subprogram_declaration(subprogram_declaration_t * node, int spaces)
 	print_declarations(node->declarations, spaces + SP_INDENT);
 	print_statement_list(node->statements, spaces + SP_INDENT);
 }
+
+
+void gencode_subprogram_declaration(subprogram_declaration_t * node) {
+	//setup addresses
+	gencode_subprogram_head(node->head);
+	fprintf(stderr, "push %%ebp\n");
+	
+	gencode_declarations(node->declarations);
+	
+	gencode_statement_list(node->statements);
+	
+	fprintf(stderr, "pop %%ebp\n\n");
+}

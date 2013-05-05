@@ -22,5 +22,26 @@ int 	  typeof_simple_expression(simple_expression_t * node) {
 	if(node->left == NULL) {
 		return typeof_term(node->right);
 	}
-	return INTEGER_TYPE;
+	return INTEGER_TYPE; //TODO SAME FIX AS MULTOP
+}
+
+char	* gencode_simple_expression(simple_expression_t * node) {
+	char * right;
+	char * left;
+	char * result;
+	if(node->left == NULL) {
+		return gencode_term(node->right);
+	}
+	fprintf(stderr, "push %%ebx\n");
+	fprintf(stderr, "push %%ecx\n");
+	right = gencode_term(node->right);
+	fprintf(stderr, "movl %s %%ebx\n", right);
+	left = gencode_simple_expression(node->left);
+	fprintf(stderr, "movl %s %%ecx\n", left);
+	
+	result = gencode_addop(node->op, "%ebx", "%ecx");
+	
+	fprintf(stderr, "pop %%ecx\n");
+	fprintf(stderr, "pop %%ebx\n");
+	return result;
 }

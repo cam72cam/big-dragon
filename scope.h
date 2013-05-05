@@ -7,7 +7,7 @@ typedef struct scope_ident_s scope_ident_t;
 #include "syntax_tree/tree.h"
 
 typedef struct scope_ident_s {
-//	char * address;
+	char * address;
 	bool param;
 	identifier_t * node;
 	scope_t * scope;

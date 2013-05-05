@@ -14,3 +14,8 @@ void   print_statement_list(statement_list_t * node, int spaces) {
 	for(; node != NULL && node->statement != NULL; node = node->next)
 		print_statement(node->statement, spaces + SP_INDENT);
 }
+
+void gencode_statement_list(statement_list_t * node) {
+	for(; node != NULL && node->statement != NULL; node = node->next)
+		gencode_statement(node->statement);
+}

@@ -29,3 +29,13 @@ void	  print_declarations(declarations_t * node, int spaces) {
 		print_type(node->type, spaces + SP_INDENT);
 	}
 }
+
+int		  declarations_length(declarations_t * node) {
+	return node != NULL ? 1 + declarations_length(node->next) : 0;
+}
+
+
+void	  gencode_declarations(declarations_t * node) {
+	fprintf(stderr, "movl %%esp, %%ebp\n");
+	fprintf(stderr, "subl %d, %%esp\n", declarations_length(node) * 4);
+}

@@ -18,6 +18,16 @@ program main( input, output );
 		var r: real;
 		var t: integer;
         begin
+        	t := gcd(0,0);
+            if a < b then 
+                gcdtwo := gcdtwo( b, a )
+            else if b = 0 then
+                gcdtwo := a
+            else
+                begin
+                    r := (a mod b);
+                    gcdtwo := gcdtwo(b, r)
+                end
         end;
     begin
         read( a );

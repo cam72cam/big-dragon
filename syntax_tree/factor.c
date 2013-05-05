@@ -56,3 +56,34 @@ int 	  typeof_factor(factor_t * node) {
 	}
 	return -1;
 }
+
+char *	gencode_factor(factor_t * node) {
+	char * tmp;
+	static int c = 0;
+	if(node->node == NULL) {
+		return node->scoped_ident->address;
+	} else {
+		switch(node->node->type) {
+			case PROCEDURE_STATEMENT_T:
+				return gencode_procedure_statement(PROCEDURE_STATEMENT_N(node->node));
+				break;
+			case INTEGER_T:
+				return gencode_integer(INTEGER_N(node->node));
+				break;
+			case EXPRESSION_T:
+				return gencode_expression(EXPRESSION_N(node->node));
+				break;
+			case FACTOR_T:
+				if(node->not) {
+					tmp = gencode_factor(FACTOR_N(node->node));
+					fprintf(stderr, "cmpl $1, %s\n", tmp);
+					fprintf(stderr, "movl $1, %s\n", tmp);
+					fprintf(stderr, "jne .ft%d\n", c); // if was true, set false;
+					fprintf(stderr, "movl $0, %s\n", tmp);
+					fprintf(stderr, ".ft%d\n", c);
+					return tmp;
+				}
+				break;
+		}
+	}
+}

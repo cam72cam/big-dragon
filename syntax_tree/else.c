@@ -18,3 +18,13 @@ void	 print_else(else_t * node, int spaces){
 			break;
 	}
 }
+void	  gencode_else(else_t * node) {
+	switch(node->node->type) {
+		case IF_T:
+			gencode_if(IF_N(node->node));
+			break;
+		case STATEMENT_T:
+			gencode_statement(STATEMENT_N(node->node));
+			break;
+	}
+}
