@@ -37,9 +37,10 @@ void	  print_mulop(mulop_t * node, int spaces) {
 
 int typeof_mulop(mulop_t* node) {
 	switch(node->type) {
-		case MULT:
 		case DIV:
 			return REAL_TYPE;
+		case MULT:
+			return -1;
 		case AND:
 		case MOD:
 			return INTEGER_TYPE;

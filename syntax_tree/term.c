@@ -22,5 +22,13 @@ int 	  typeof_term(term_t * node) {
 	if(node->left  == NULL) {
 		return typeof_factor(node->right);
 	}
-	return typeof_mulop(node->op);
+	
+	if(typeof_mulop(node->op) == REAL_TYPE) {
+		return REAL_TYPE;
+	} else if(typeof_mulop(node->op) == -1) { //MULT can be either
+		if(typeof_term(node->left) == REAL_TYPE || typeof_factor(node->right) == REAL_TYPE) {
+			return REAL_TYPE;
+		}
+	}
+	return  INTEGER_TYPE;
 }

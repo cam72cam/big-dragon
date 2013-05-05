@@ -26,7 +26,7 @@ int yywrap()
 
 int main()
 {
-	line_number = 0;
+	line_number = 1;
 
 	identifier_t * tmp;
 	push_scope("global");
@@ -122,16 +122,16 @@ subprogram_declarations:
 	{
 		$$ = make_subprogram_declarations(NULL,NULL);
 	}
-	| subprogram_declarations subprogram_declaration ENDSTMT 
+	|  subprogram_declaration ENDSTMT subprogram_declarations
 	{
-		$$ = make_subprogram_declarations(SUBPROGRAM_DECLARATION_N($2), SUBPROGRAM_DECLARATIONS_N($1));
-		pop_scope();
+		$$ = make_subprogram_declarations(SUBPROGRAM_DECLARATION_N($1), SUBPROGRAM_DECLARATIONS_N($3));
 	}
 	;
 subprogram_declaration:
 	subprogram_head declarations compound_statement 
 	{
 		$$ = make_subprogram_declaration(SUBPROGRAM_HEAD_N($1), DECLARATIONS_N($2), STATEMENT_LIST_N($3));
+		pop_scope();
 	}
 	;
 subprogram_head:
@@ -219,16 +219,13 @@ if:
 	{
 		$$ = make_statement(make_if(EXPRESSION_N($2), STATEMENT_N($4), ELSE_N($5)));
 	}
+	;
 else:
 	/*empty*/ 
 	{
 		$$ = make_else(NULL);
 	}
 	| ELSE statement 
-	{
-		$$ = make_else($2);
-	}
-	| ELSE if
 	{
 		$$ = make_else($2);
 	}
@@ -274,7 +271,7 @@ simple_expression:
 	{
 		$$ = make_simple_expression(NULL,NULL,TERM_N($1));
 	}
-	| SIGN term //TODO
+	| SIGN term
 	{
 		$$ = make_simple_expression(NULL,ADDOP_N($1),TERM_N($2));
 	}
