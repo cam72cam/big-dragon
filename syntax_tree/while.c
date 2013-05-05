@@ -26,7 +26,7 @@ void gencode_while(while_t * node) {
 	gencode_statement(node->statement);
 	
 	tmp = gencode_expression(node->expression);
-	fprintf(stderr, "cmpl $1, %s\n", tmp); //if the expression is true
+	fprintf(stderr, "cmpl $0x1, %s\n", tmp); //if the expression is true
 	fprintf(stderr, "je .while%d\n", lcnt); // go back to the top and do it again
 	
 }

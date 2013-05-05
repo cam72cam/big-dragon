@@ -72,11 +72,11 @@ char * gencode_relop(relop_t * node, char * left, char * right) {
 			break;
 	}
 	
-	fprintf(stderr, "movl $0, %%eax\n");
+	fprintf(stderr, "movl $0x0, %%eax\n");
 	fprintf(stderr, "jmp .done%d\n", counter);
 	
 	fprintf(stderr, ".over%d:\n", counter);
-	fprintf(stderr, "movl $1, %%eax\n");
+	fprintf(stderr, "movl $0x1, %%eax\n");
 		
 	fprintf(stderr, ".done%d:\n", counter);
 	counter ++;

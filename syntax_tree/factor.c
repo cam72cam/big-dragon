@@ -78,10 +78,10 @@ char *	gencode_factor(factor_t * node) {
 			case FACTOR_T:
 				if(node->not) {
 					tmp = gencode_factor(FACTOR_N(node->node));
-					fprintf(stderr, "cmpl $1, %s\n", tmp);
-					fprintf(stderr, "movl $1, %s\n", tmp);
+					fprintf(stderr, "cmpl $0x1, %s\n", tmp);
+					fprintf(stderr, "movl $0x1, %s\n", tmp);
 					fprintf(stderr, "jne .ft%d\n", lc); // if was true, set false;
-					fprintf(stderr, "movl $0, %s\n", tmp);
+					fprintf(stderr, "movl $0x0, %s\n", tmp);
 					fprintf(stderr, ".ft%d:\n", lc);
 					return tmp;
 				}

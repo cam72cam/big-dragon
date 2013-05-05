@@ -55,11 +55,11 @@ void register_identifier(identifier_t * node, bool param) {
 	current_scope->list[current_scope->length].param = param;
 	if(param) {
 		current_scope->list[current_scope->length].address = malloc(sizeof(char) * 10);
-		sprintf(current_scope->list[current_scope->length].address, "%d(%%ebp)", pc);
+		sprintf(current_scope->list[current_scope->length].address, "0x%d(%%ebp)", pc);
 		pc+=4;
 	} else {
 		current_scope->list[current_scope->length].address = malloc(sizeof(char) * 10);
-		sprintf(current_scope->list[current_scope->length].address, "%d(%%ebp)", lc);
+		sprintf(current_scope->list[current_scope->length].address, "0x%d(%%ebp)", lc);
 		lc-=4;
 	}
 	

@@ -1,0 +1,10 @@
+The list of TODO's for this project includes, but is not limited to:
+
+Asm generation:
+	logical and/or
+	use floats for proper operations instead of all ints
+	fix the stack so it actually runs.
+Other:
+	add full support for arrays
+	fix type checking for ()
+	certain precedence levels may need to be adjusted

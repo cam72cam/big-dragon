@@ -25,7 +25,7 @@ void gencode_if(if_t * node) {
 	ifc++;
 	char * ifres;
 	ifres = gencode_expression(node->expression);
-	fprintf(stderr, "cmpl $1, %s\n", ifres);
+	fprintf(stderr, "cmpl $0x1, %s\n", ifres);
 	fprintf(stderr, "je .ifeq%d\n", tmp);
 	fprintf(stderr, "jne .ifneq%d\n", tmp);
 	

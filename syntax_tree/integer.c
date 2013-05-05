@@ -14,6 +14,6 @@ void	  print_integer(integer_t * node, int spaces) {
 
 char	* gencode_integer(integer_t * node) {
 	char * val = malloc(sizeof(20));
-	sprintf(val, "$%d", node->value);
+	sprintf(val, "$0x%x", node->value);
 	return val;
 }

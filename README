@@ -1,0 +1,8 @@
+This is a somewhat functional compiler for CS445, the dragon project.  In it's current state it does type checking, symatic evaluation to the degree I understand and compiles to close but not quite correct intel32 asembly.  There are a few glaring issues outlined in the TODO file.
+
+Make:
+	running `make` builds bigd
+	running `make test` builds bigd and compiles a sample program
+
+Running bigd:
+	bigd program.p [--tree]		the tree option will print out the syntax tree after the asm
