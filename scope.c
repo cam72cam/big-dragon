@@ -5,6 +5,20 @@
 int pc;
 int lc;
 
+
+
+void ebp_to_esp(char * str) {
+	int i = 0;
+	while(str[i] != '\0' && i < strlen(str) + 4) {
+		if(str[i] == 'e' && str[i+1] == 'b' && str[i+2] == 'p') {
+			str[i+1] = 's';
+			return;
+		}
+		i++;
+	}
+}
+
+
 void push_scope(char * name) {
 	scope_t * tmp;
 	if(top_scope == NULL) {
@@ -17,6 +31,7 @@ void push_scope(char * name) {
 		current_scope = malloc(sizeof(scope_t));
 		current_scope->down = tmp;
 		find_identifier(name)->scope = current_scope;
+		find_identifier(name)->address = "%eax\npop %ebp\nret";
 	}
 	current_scope->size = 200;
 	current_scope->length = 0;
@@ -28,6 +43,10 @@ void push_scope(char * name) {
 }
 
 void pop_scope() {
+	int i;
+	for(i = 0; i < current_scope->length; i++) {
+		ebp_to_esp(current_scope->list[i].address);
+	}
 	current_scope = current_scope->down;
 }
 
@@ -36,13 +55,14 @@ void register_identifier(identifier_t * node, bool param) {
 	current_scope->list[current_scope->length].param = param;
 	if(param) {
 		current_scope->list[current_scope->length].address = malloc(sizeof(char) * 10);
-		sprintf(current_scope->list[current_scope->length].address, "%d(%%esp)", pc);
+		sprintf(current_scope->list[current_scope->length].address, "%d(%%ebp)", pc);
 		pc+=4;
 	} else {
 		current_scope->list[current_scope->length].address = malloc(sizeof(char) * 10);
-		sprintf(current_scope->list[current_scope->length].address, "%d(%%esp)", lc);
+		sprintf(current_scope->list[current_scope->length].address, "%d(%%ebp)", lc);
 		lc-=4;
 	}
+	
 	current_scope->length++;
 	//TODO DYNAMICALLY EXTEND
 }

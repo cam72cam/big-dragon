@@ -1,5 +1,6 @@
 #include "assignment.h"
 #include <stdlib.h>
+#include <string.h>
 
 tree_t	* make_assignment(variable_t * variable, expression_t * expression) {
 	assignment_t	* node	= malloc(sizeof(assignment_t));
@@ -18,5 +19,7 @@ void   print_assignment(assignment_t * node, int spaces) {
 }
 
 void gencode_assignment(assignment_t * node) {
-	fprintf(stderr, "movl %s, %s\n", gencode_expression(node->expression), node->variable->ident->address);
+	char * tmp = gencode_expression(node->expression);
+//	esp_to_ebp(tmp); //if we are assigning to a parameter, we know it is in ebp
+	fprintf(stderr, "movl %s, %s\n", tmp, node->variable->ident->address);
 }

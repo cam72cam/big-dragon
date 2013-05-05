@@ -20,3 +20,14 @@ void   print_program(program_t * node, int spaces) {
 	print_subprogram_declarations(node->subprogram_declarations, spaces + SP_INDENT);
 	print_statement_list(node->statements, spaces + SP_INDENT);
 }
+
+void gencode_program(program_t * node) {
+	fprintf(stderr, "%s:\n", node->name->ident);
+	fprintf(stderr, "push %%ebp\n");
+	
+	gencode_declarations(node->declarations);
+	
+	gencode_statement_list(node->statements);
+	
+	fprintf(stderr, "pop %%ebp\n\n");
+}
