@@ -13,7 +13,7 @@ tree_t	* make_procedure_statement(identifier_t * ident, expression_list_t * para
 	expected = scope_parameters_length(node->identifier->scope);
 	if(given != expected) {
 		buffer = malloc(sizeof(char) * 1000);
-		sprintf(buffer, "function %s expected %d parameters, given %d", ident->ident, given, expected);
+		sprintf(buffer, "function %s expected %d parameters, given %d", ident->ident, expected, given);
 		yyerror(buffer);
 		free(buffer);
 	}

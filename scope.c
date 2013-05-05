@@ -3,7 +3,6 @@
 #include <string.h>
 
 void push_scope(char * name) {
-	fprintf(stderr, "push %s\n", name);
 	scope_t * tmp;
 	if(top_scope == NULL) {
 		top_scope = malloc(sizeof(scope_t));
@@ -24,7 +23,6 @@ void push_scope(char * name) {
 }
 
 void pop_scope() {
-	fprintf(stderr, "pop %s\n", current_scope->name);
 	current_scope = current_scope->down;
 }
 
