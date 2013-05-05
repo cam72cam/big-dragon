@@ -43,11 +43,13 @@ char * gencode_term(term_t * node) {
 	fprintf(stderr, "push %%ebx\n");
 	fprintf(stderr, "push %%ecx\n");
 	right = gencode_factor(node->right);
-	fprintf(stderr, "movl %s %%ebx\n", right);
+	fprintf(stderr, "movl %s, %%ebx\n", right);
 	left = gencode_term(node->left);
-	fprintf(stderr, "movl %s %%ecx\n", left);
-	fprintf(stderr, "test %%ebx, %%ecx\n");
+	fprintf(stderr, "movl %s, %%ecx\n", left);
+	
+	result = gencode_mulop(node->op, "%ecx","%ebx");
+	
 	fprintf(stderr, "pop %%ecx\n");
 	fprintf(stderr, "pop %%ebx\n");
-	return "";
+	return result;
 }

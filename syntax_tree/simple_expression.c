@@ -35,9 +35,9 @@ char	* gencode_simple_expression(simple_expression_t * node) {
 	fprintf(stderr, "push %%ebx\n");
 	fprintf(stderr, "push %%ecx\n");
 	right = gencode_term(node->right);
-	fprintf(stderr, "movl %s %%ebx\n", right);
+	fprintf(stderr, "movl %s, %%ebx\n", right);
 	left = gencode_simple_expression(node->left);
-	fprintf(stderr, "movl %s %%ecx\n", left);
+	fprintf(stderr, "movl %s, %%ecx\n", left);
 	
 	result = gencode_addop(node->op, "%ebx", "%ecx");
 	

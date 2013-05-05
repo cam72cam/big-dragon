@@ -47,3 +47,36 @@ int typeof_mulop(mulop_t* node) {
 	}
 	return -100;
 }
+
+
+char  	* gencode_mulop(mulop_t * node, char * left, char * right) {
+	switch(node->type) {
+		case MULT:
+			fprintf(stderr, "imull %s, %s\n", left, right);
+			break;
+		case DIV:
+			fprintf(stderr, "push %%edx\n");
+			fprintf(stderr, "push %%eax\n");
+			fprintf(stderr, "xor %%edx, %%edx\n");
+			fprintf(stderr, "mov %s, %%eax\n", left);
+			fprintf(stderr, "idivl %s\n", right); //eax is value
+			fprintf(stderr, "mov %%eax, %s\n", right);
+			fprintf(stderr, "pop %%eax\n");
+			fprintf(stderr, "pop %%edx\n");
+			break;
+		case AND:
+			fprintf(stderr, "mulop: AND TODO\n");
+			break;
+		case MOD:
+			fprintf(stderr, "push %%edx\n");
+			fprintf(stderr, "push %%eax\n");
+			fprintf(stderr, "xor %%edx %%edx\n");
+			fprintf(stderr, "mov %s %%eax\n", left);
+			fprintf(stderr, "idivl %s\n", right);
+			fprintf(stderr, "mov %%edx, \n", right); //edx is remainder
+			fprintf(stderr, "pop %%eax\n");
+			fprintf(stderr, "pop %%edx\n");
+			break;
+	}
+	return right;
+}
