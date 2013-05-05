@@ -74,7 +74,6 @@ program:
 		$$ = make_program(IDENTIFIER_N($2), IDENTIFIER_LIST_N($5), DECLARATIONS_N($8), SUBPROGRAM_DECLARATIONS_N($9), STATEMENT_LIST_N($10));
 		//print_program(PROGRAM_N($$), 4);
 		gencode_program(PROGRAM_N($$));
-		pop_scope();
 	}
 	;
 

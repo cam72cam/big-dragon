@@ -12,4 +12,5 @@ typedef struct while_s {
 
 tree_t	* make_while(expression_t * expression, statement_t * statement);
 void	  print_while(while_t * node, int spaces);
+void	  gencode_while(while_t * node);
 #endif

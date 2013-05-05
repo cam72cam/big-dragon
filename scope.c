@@ -39,7 +39,7 @@ void push_scope(char * name) {
 	strcpy(current_scope->name, name);
 	current_scope->list = malloc(sizeof(scope_ident_t)*(current_scope->size +1));
 	pc=0;
-	lc=-4;
+	lc=0;
 }
 
 void pop_scope() {

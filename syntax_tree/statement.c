@@ -41,7 +41,7 @@ void	gencode_statement(statement_t * node) {
 			gencode_if(IF_N(node->node));
 			break;
 		case WHILE_T:
-//			gencode_while(WHILE_N(node->node));
+			gencode_while(WHILE_N(node->node));
 			break;
 	}
 }

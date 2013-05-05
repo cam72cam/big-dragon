@@ -30,8 +30,9 @@ program main( input, output );
                 end
         end;
     begin
-        read( a );
-        read( b );
+    	a := 5;
+    	while a = 5 do
+	        read( a );
         c := gcd( a, b );
         x := gcdtwo(y,z);
         writeln( c )

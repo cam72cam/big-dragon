@@ -21,20 +21,21 @@ void   print_if(if_t * node, int spaces) {
 
 void gencode_if(if_t * node) {
 	static int ifc = 0;
+	int tmp = ifc;
+	ifc++;
 	char * ifres;
 	ifres = gencode_expression(node->expression);
 	fprintf(stderr, "cmpl $1, %s\n", ifres);
-	fprintf(stderr, "je .ifeq%d\n", ifc);
-	fprintf(stderr, "jne .ifneq%d\n", ifc);
+	fprintf(stderr, "je .ifeq%d\n", tmp);
+	fprintf(stderr, "jne .ifneq%d\n", tmp);
 	
-	fprintf(stderr, ".ifeq%d\n", ifc);
+	fprintf(stderr, ".ifeq%d\n", tmp);
 	gencode_statement(node->statement);
-	fprintf(stderr, "jmp .ifend%d\n", ifc);
+	fprintf(stderr, "jmp .ifend%d\n", tmp);
 	
-	fprintf(stderr, ".ifneq%d\n", ifc);
+	fprintf(stderr, ".ifneq%d\n", tmp);
 	gencode_else(node->elsey);
-	fprintf(stderr, "jmp .ifend%d\n", ifc);
+	fprintf(stderr, "jmp .ifend%d\n", tmp);
 	
-	fprintf(stderr, ".ifend%d\n", ifc);
-	ifc++;
+	fprintf(stderr, ".ifend%d\n", tmp);
 }
