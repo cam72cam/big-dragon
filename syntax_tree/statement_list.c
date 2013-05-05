@@ -11,6 +11,6 @@ tree_t	* make_statement_list(statement_t * statement, statement_list_t * next) {
 void   print_statement_list(statement_list_t * node, int spaces) {
 	print_spaces(spaces);
 	fprintf(stderr, "STATEMENT_LIST:\n");
-	for(; node != NULL; node = node->next)
+	for(; node != NULL && node->statement != NULL; node = node->next)
 		print_statement(node->statement, spaces + SP_INDENT);
 }
